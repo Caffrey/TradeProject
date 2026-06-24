@@ -11,7 +11,7 @@ const MenuItems = [
     },
     {
         label:"Trade Analysis",
-        herf :"/TradeNote/Default"
+        herf :"/TradeNote/TradeAnalysis"
     }
     
 ];
