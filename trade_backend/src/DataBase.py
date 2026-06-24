@@ -5,6 +5,7 @@ from sqlalchemy.orm import declarative_base
 from sqlalchemy import Column, BigInteger, Text,DateTime,Numeric
 import pandas as pd
 from pandas import DataFrame
+from src.env import GlobalEnv
 
 Base = declarative_base()
 
@@ -26,17 +27,16 @@ class TradeRecord(Base):
     Pnl = Column(Numeric)
 
 
-DATABASE_URL = "postgresql://postgres:123123@localhost:5432/Trade"
 
-engine = create_engine(DATABASE_URL)
+engine = create_engine(GlobalEnv.DATABASE_URL)
 SessionA = sessionmaker(bind=engine,
                        autoflush=False,
                        autocommit=False)
 
 #API
 
-db = SessionA()
-
+DataBaseSession = SessionA()
+Base.metadata.create_all(bind=engine)
 
 
 
@@ -51,8 +51,8 @@ def ProcessAtasDataFrame(df : DataFrame):
         trade.Tick = row['Profit (ticks)']
         trade.Pnl = row['PnL']
         arr.append(trade)
-    db.add_all(arr)
-    db.commit()
+    DataBaseSession.add_all(arr)
+    DataBaseSession.commit()
 
 
 
