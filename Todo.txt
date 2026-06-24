@@ -3,3 +3,61 @@ Frame
 
 Interaction&View: next.js
 Data Server : FastAPI + Middleware[PSQL + Redius]
+
+
+
+0.navigation
+1.add Trade 
+2.analysis performance dash board
+3.data analysis 
+
+//
+dash board 
+navigation 
+
+https://vercel.com/templates/next.js/next-js-and-shadcn-ui-admin-dashboard
+https://vercel.com/templates/next.js/next-js-and-shadcn-ui-admin-dashboard
+https://www.youtube.com/watch?v=myYlGLFxZas&t=11948s
+
+
+路由
+layout
+组件
+布局
+样式
+
+数据交互
+录入交易记录OK
+
+//design
+
+
+View
+    Page Route
+    Component
+    ServerInterface
+Server
+    Interaction Data API
+    Server Store/Access
+
+
+
+//Feature
+
+交易日志
+筛选【时间，条件】
+    交易记录与统计
+    月度/筛选时间和条件
+    1.K线 Trade On Chart 记录
+    2. 盈利/胜率/ProfitFactor/ 平均盈亏、盈利曲线，Candelr 盈利亏损日标记
+    2.每月每天的盈利曲线
+    3.手续费统计
+    4.交割单    
+3.交易记录录入
+5.交易统计筛选
+
+
+市场数据统计
+    品种
+        波动率统计
+        

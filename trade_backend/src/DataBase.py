@@ -1,9 +1,10 @@
-from fastapi import FastAPI
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import Session
 from sqlalchemy.orm import declarative_base
-from sqlalchemy import Column, BigInteger, Text
+from sqlalchemy import Column, BigInteger, Text,DateTime,Numeric
+import pandas as pd
+from pandas import DataFrame
 
 Base = declarative_base()
 
@@ -13,6 +14,16 @@ class User(Base):
     ID = Column(BigInteger, primary_key=True)
     UserName = Column(Text)
     Password = Column(Text)
+
+class TradeRecord(Base):
+    __tablename__= "TradeRecord"
+    ID = Column(BigInteger,primary_key=True,autoincrement=True)
+    Symbol = Column(Text)
+    OpenTime = Column(DateTime(timezone=False))
+    CloseTime = Column(DateTime(timezone=False))
+    Lot = Column(BigInteger)
+    Tick = Column(BigInteger)
+    Pnl = Column(Numeric)
 
 
 DATABASE_URL = "postgresql://postgres:123123@localhost:5432/Trade"
@@ -25,6 +36,29 @@ SessionA = sessionmaker(bind=engine,
 #API
 
 db = SessionA()
-a = db.query(User).all()
-for u in a:
-    print(u.ID, u.UserName, u.Password)
+
+
+
+
+def ProcessAtasDataFrame(df : DataFrame):
+    arr = []
+    for index, row in df.iterrows():
+        trade = TradeRecord()
+        trade.Symbol = row['Instrument']
+        trade.OpenTime = row['Open time']
+        trade.Lot = row['Open volume']
+        trade.CloseTime = row['Close time'] if pd.notna(row['Close time']) else row["Open time"]
+        trade.Tick = row['Profit (ticks)']
+        trade.Pnl = row['PnL']
+        arr.append(trade)
+    db.add_all(arr)
+    db.commit()
+
+
+
+def TradeImport(df : DataFrame, TradeSheetType : str ):
+    print
+    match TradeSheetType:
+        case "Atas" :
+            ProcessAtasDataFrame(df)
+
