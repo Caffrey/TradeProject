@@ -62,3 +62,10 @@ def TradeImport(df : DataFrame, TradeSheetType : str ):
         case "Atas" :
             ProcessAtasDataFrame(df)
 
+
+def GetTrades(
+    StartDate : str,
+    EndDate : str,
+    Symbol : str):
+    trades = DataBaseSession.query(TradeRecord).all()
+    return trades;
