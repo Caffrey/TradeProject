@@ -10,7 +10,7 @@ export default function TradeNoteLayout({
         {/* Left */}
         <div className="w-1/6 bg-red-200"><Menu /></div>
         {/* Right */}
-        <div className="w-5/6 bg-blue-200">{children}</div>
+        <div className="w-5/6  h-full">{children}</div>
     </div>
   );
 }

@@ -7,7 +7,7 @@ const MenuItems = [
     },
     {
         label:"Montly Trade Analysis",
-        herf :"/TradeNote/Default"
+        herf :"/TradeNote/MonthTradeAnalysis"
     },
     {
         label:"Trade Analysis",
@@ -22,7 +22,7 @@ export default function Menu()
     return(
         <div className="">
                 {MenuItems.map(item=>(
-                    <div className="">
+                    <div className="" key={item.label}>
                         <Link href={item.herf}>
                             <span>{item.label}</span>
                         </Link>
