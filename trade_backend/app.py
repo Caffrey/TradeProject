@@ -1,9 +1,9 @@
 from fastapi import FastAPI
 from fastapi import FastAPI ,Form, UploadFile,File
 import pandas as pd
-from pathlib import Path
-from src.database import TradeImport,DataBaseSession,TradeRecord,GetTrades
-from src.env import GlobalEnv
+from src.dataBase import TradeImport,DataBaseSession,TradeRecord,GetTrades,RefreshAtasDataBase
+
+
 
 app = FastAPI()
 
@@ -21,14 +21,7 @@ async def uploadTrade(TradeSheetType : str = Form(...),
 
 @app.post('/refreshTradeRecordDataBase')
 async def RefreshTradeRecordDataBAse():
-    folder = Path(GlobalEnv.AtasTradePath)
-
-    DataBaseSession.query(TradeRecord).delete()
-    excel_files = list(folder.glob("*.xlsx"))
-    for file in folder.glob("*.xlsx"):
-        df = pd.read_excel(file,sheet_name="Journal")
-        TradeImport(df,"Atas")
-
+    RefreshAtasDataBase()
 
 @app.get('/GetTradeData')
 async def GetTradeData(

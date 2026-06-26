@@ -1,3 +1,5 @@
+from src.env import GlobalEnv
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import Session
@@ -5,7 +7,8 @@ from sqlalchemy.orm import declarative_base
 from sqlalchemy import Column, BigInteger, Text,DateTime,Numeric
 import pandas as pd
 from pandas import DataFrame
-from src.env import GlobalEnv
+from datetime import datetime
+from pathlib import Path
 
 Base = declarative_base()
 
@@ -62,10 +65,29 @@ def TradeImport(df : DataFrame, TradeSheetType : str ):
         case "Atas" :
             ProcessAtasDataFrame(df)
 
+def RefreshAtasDataBase():
+    folder = Path(GlobalEnv.AtasTradePath)
+    for file in folder.glob("*.xlsx"):
+        df = pd.read_excel(file,sheet_name="Journal")
+        TradeImport(df,"Atas")
+
 
 def GetTrades(
-    StartDate : str,
-    EndDate : str,
+    StartDate : datetime,
+    EndDate : datetime,
     Symbol : str):
-    trades = DataBaseSession.query(TradeRecord).all()
+    selectResult = DataBaseSession.query(TradeRecord).where(
+        TradeRecord.Symbol.contains(Symbol),
+        TradeRecord.CloseTime <= EndDate,
+        TradeRecord.OpenTime >= StartDate
+    )
+    trades = selectResult.all()
     return trades;
+
+
+RefreshAtasDataBase()
+start = datetime(2026,5,28)
+end = datetime(2026,6,20)
+a = GetTrades(start,end,"GC")
+# alltrade = DataBaseSession.query(TradeRecord).all()
+
