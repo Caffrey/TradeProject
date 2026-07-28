@@ -1,4 +1,4 @@
-import { CartesianGrid, Legend, Line, LineChart, XAxis, YAxis } from 'recharts';
+import { CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts';
 import { RechartsDevtools } from '@recharts/devtools';
 import { TradeData } from '../data/TradeData';
 
@@ -26,6 +26,7 @@ let DailyData = StatisticsDailyTradeData(TradeRecords);
       <CartesianGrid />
       <Line dataKey="EquityCurve" />
       <XAxis dataKey="Order" />
+      <Tooltip/>
       <YAxis />
       <Legend />
       <RechartsDevtools />
@@ -39,6 +40,8 @@ let DailyData = StatisticsDailyTradeData(TradeRecords);
       <Line dataKey="EquityCurve" />
       <XAxis dataKey="Date" />
       <YAxis />
+      <Tooltip/>
+
       <Legend />
       <RechartsDevtools />
     </LineChart>
@@ -51,6 +54,8 @@ let DailyData = StatisticsDailyTradeData(TradeRecords);
       <Line dataKey="Pnl" />
       <XAxis dataKey="Date" />
       <YAxis />
+      <Tooltip/>
+
       <Legend />
       <RechartsDevtools />
     </LineChart>

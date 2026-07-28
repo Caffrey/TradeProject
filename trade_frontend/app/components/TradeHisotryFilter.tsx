@@ -41,7 +41,7 @@ export default function TradeHisotryFilter()
 
 
     const start = new Date();
-    start.setDate(start.getDate() - 10);
+    start.setDate(start.getDate() - 30);
 
     const startDate = formatDateTime(start);
 
