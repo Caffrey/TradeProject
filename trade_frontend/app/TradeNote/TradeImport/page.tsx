@@ -19,7 +19,6 @@ export default function TradeImport()
 
     async function handleSumit(formData : FormData){
           "use server";
-        console.log("lkasdjhflkajsd")
         
 
         const res = await fetch("http://localhost:8000/refreshTradeRecordDataBase", {

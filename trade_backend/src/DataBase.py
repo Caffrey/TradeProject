@@ -1,6 +1,6 @@
 from src.env import GlobalEnv
 
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine 
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import Session
 from sqlalchemy.orm import declarative_base
@@ -9,6 +9,7 @@ import pandas as pd
 from pandas import DataFrame
 from datetime import datetime
 from pathlib import Path
+import re
 
 Base = declarative_base()
 
@@ -28,6 +29,7 @@ class TradeRecord(Base):
     Lot = Column(BigInteger)
     Tick = Column(BigInteger)
     Pnl = Column(Numeric)
+    SourceSymbol = Column(Text)
 
 
 
@@ -41,13 +43,27 @@ SessionA = sessionmaker(bind=engine,
 DataBaseSession = SessionA()
 Base.metadata.create_all(bind=engine)
 
+def FilterSymbolName(Name:str):
+    code = Name
+
+    match = re.search(
+            r'#?([A-Z]{1,3})(?=[FGHJKMNQUVXZ]\d|$)',
+            code
+        )
+
+    if not match:
+        raise ValueError(f"非法代码: {code}")
+
+    return match.group(1)
+
 
 
 def ProcessAtasDataFrame(df : DataFrame):
     arr = []
     for index, row in df.iterrows():
         trade = TradeRecord()
-        trade.Symbol = row['Instrument']
+        trade.Symbol = FilterSymbolName(row['Instrument'])
+        trade.SourceSymbol = row['Instrument']
         trade.OpenTime = row['Open time']
         trade.Lot = row['Open volume']
         trade.CloseTime = row['Close time'] if pd.notna(row['Close time']) else row["Open time"]
@@ -60,7 +76,6 @@ def ProcessAtasDataFrame(df : DataFrame):
 
 
 def TradeImport(df : DataFrame, TradeSheetType : str ):
-    print
     match TradeSheetType:
         case "Atas" :
             ProcessAtasDataFrame(df)
@@ -84,10 +99,15 @@ def GetTrades(
     trades = selectResult.all()
     return trades;
 
+def ClearTable():
+    DataBaseSession.query(TradeRecord).delete()
+    DataBaseSession.commit()
 
-RefreshAtasDataBase()
-start = datetime(2026,5,28)
-end = datetime(2026,6,20)
-a = GetTrades(start,end,"GC")
+# ClearTable()
+# RefreshAtasDataBase()
+
+
+start = datetime(2026,7,15)
+end = datetime(2026,7,27)
+# a = GetTrades(start,end,"MNQ")
 # alltrade = DataBaseSession.query(TradeRecord).all()
-

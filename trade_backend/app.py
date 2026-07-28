@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi import FastAPI ,Form, UploadFile,File
 import pandas as pd
 from src.dataBase import TradeImport,DataBaseSession,TradeRecord,GetTrades,RefreshAtasDataBase
-
+from datetime import datetime
 
 
 app = FastAPI()
@@ -25,25 +25,32 @@ async def RefreshTradeRecordDataBAse():
 
 @app.get('/GetTradeData')
 async def GetTradeData(
-    StartDate : str,
-    EndDate : str,
-    Symbol : str):
-    trades = GetTrades(StartDate,EndDate,Symbol)
+    StartDate : datetime,
+    EndDate : datetime,
+    SymbolName : str):
 
-    result = {}
-    result.StartDate = StartDate;
-    result.EndDate = EndDate;
-    result.Symbol = Symbol;
+    print("lasdjflkasjdflsj")
+    print(StartDate)
+    print(EndDate)
 
-    result.EquityCurve = []
-    result.Distriton = []
+    trades = GetTrades(StartDate,EndDate,SymbolName)
 
-    id = 0
-    sum = 0
-    for PerTrade in trades:
-        id = id + 1
-        sum = sum + PerTrade.Pnl
-        result.EquityCurve.append({"header":id,"value":sum})
+    return trades
+
+    # result = {}
+    # result.StartDate = StartDate;
+    # result.EndDate = EndDate;
+    # result.Symbol = Symbol;
+
+    # result.EquityCurve = []
+    # result.Distriton = []
+
+    # id = 0
+    # sum = 0
+    # for PerTrade in trades:
+    #     id = id + 1
+    #     sum = sum + PerTrade.Pnl
+    #     result.EquityCurve.append({"header":id,"value":sum})
 
     
 
