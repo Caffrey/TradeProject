@@ -15,7 +15,8 @@ def InitDataBase():
                         autoflush=False,
                         autocommit=False)
 
-    Base.metadata.create_all(bind=engine)
+    User.metadata.create_all(bind=engine)
+    TradeRecord.metadata.create_all(bind=engine)
 
     return Session_local()
 

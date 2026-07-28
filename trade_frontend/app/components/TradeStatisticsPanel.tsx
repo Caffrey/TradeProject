@@ -15,7 +15,7 @@ export default function TradeStatisticsPanel(
 
                     <NormalCardPanel
                         Title="Net Pnl"
-                        Content={(StatisticsData.ProfitFactor-StatisticsData.TotalLost).toFixed(0)}
+                        Content={(StatisticsData.TotalProfit-StatisticsData.TotalLost).toFixed(0)}
                         SubContent={`${StatisticsData.TradeCount}Trades`}
                     />
 

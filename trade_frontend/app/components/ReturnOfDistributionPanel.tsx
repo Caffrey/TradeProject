@@ -24,7 +24,7 @@ export default function ReturnOfDistributionPanel(
     }
 )
 {
-    let TradeDorData:TradeDorData[] = StatisticsReturnOfDistribution(TradeDatas,100);
+    let TradeDorData:TradeDorData[] = StatisticsReturnOfDistribution(TradeDatas,30);
 
     return (
     <div className="flex w-full">
