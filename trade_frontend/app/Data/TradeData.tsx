@@ -30,6 +30,8 @@ export class TradeDorData {
     name: string = "";
     Percent: string = "";
     Value: number = 0;
+    Pnl : number = 0;
+    TotalPercent : string = ""
 }
 
 export class TradeStatisticsData {
@@ -86,8 +88,28 @@ export function StatisticsDailyTradeData(TradeDatas: TradeData[]) {
     return result;
 }
 
+export function SperadWinLostTradeRecords(TradeDatas: TradeData[], bin: number = 20)
+{
 
-export function StatisticsReturnOfDistribution(TradeDatas: TradeData[], bin: number = 20) {
+    let WinTradeDatas: TradeData[] = []
+    let LostTradeDatas: TradeData[] = []
+    
+
+    TradeDatas.forEach((item: TradeData) => {
+            if(item.Pnl > 0)
+            {
+                WinTradeDatas.push(item)
+            }
+            else
+            {
+                LostTradeDatas.push(item)
+            }
+        });
+
+        return [WinTradeDatas,LostTradeDatas]
+}
+
+export function StatisticsReturnOfDistribution(TradeDatas: TradeData[], bin: number = 20, MaxPnl: number) {
 
     let MaxTick: number = 0;
     let MinTick: number = 0;
@@ -100,7 +122,6 @@ export function StatisticsReturnOfDistribution(TradeDatas: TradeData[], bin: num
         TotalTrade += 1;
     });
 
-
     for (let min = MinTick; min < MaxTick; min += bin) {
 
         let data = new TradeDorData();
@@ -109,6 +130,7 @@ export function StatisticsReturnOfDistribution(TradeDatas: TradeData[], bin: num
         data.name = `${min}-${min + bin}`;
         BinDatas.push(data);
     }
+    BinDatas[BinDatas.length-1].EndBin += 1
 
     TradeDatas.forEach((item: TradeData) => {
 
@@ -116,13 +138,21 @@ export function StatisticsReturnOfDistribution(TradeDatas: TradeData[], bin: num
             x => x.StartBin <= item.Tick && x.EndBin > item.Tick
         )
         if (BinData == undefined)
-            throw new Error("找不到Bin值");
+            throw new Error(`找不到Bin值${ item.Tick}-  ${MaxTick}`);
 
         BinData.Value += 1;
         BinData.Percent = (BinData.Value / TotalTrade).toFixed(2);
+        BinData.Pnl += item.Pnl;
+        BinData.TotalPercent = Math.abs( BinData.Pnl/MaxPnl).toFixed(2);
     });
 
-    return BinDatas;
+    if (MaxPnl < 0) {
+        BinDatas.sort(
+            (a, b) => b.StartBin - a.StartBin
+        )
+    }
+    
+    return BinDatas.filter( t=> t.Pnl != 0);
 
 }
 
