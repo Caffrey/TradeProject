@@ -1,5 +1,10 @@
 
 import TradeChart from "./TradeChart";
+import TradeStatisticsPanel from "./TradeStatisticsPanel";
+import ReturnOfDistributionPanel from "./ReturnOfDistributionPanel";
+
+import { Request_GetTrades } from "../requests/TradeDataServer";
+import { TradeData,StatisticsTradeData,TradeStatisticsData} from "../data/TradeData";
 
 export default async function TradeAnalysisPanel
 (
@@ -15,46 +20,18 @@ export default async function TradeAnalysisPanel
 )
 {
 
-     let trades = [];
+    let trades:TradeData[] = await Request_GetTrades(StartDate,EndDate,SymbolName);
+    let StatisticsData:TradeStatisticsData = StatisticsTradeData(trades);
 
-     if(StartDate && EndDate && SymbolName)
-     {
-
-         const params = new URLSearchParams({
-             StartDate,
-            EndDate,
-            SymbolName
-         });
-
-          const res = await fetch(
-            `http://localhost:8000/GetTradeData?${params.toString()}`,
-            {
-                cache:"no-store"
-            }
-        );
-
-        trades = await res.json();
-     }
 
     return(
-
         <div >
             <h2>
                 Trade Result
             </h2>
-
             <TradeChart TradeRecords={trades} />
-
-            {/* {
-           trades.map((trade:any)=>(
-                    <div>
-                        {trade.Symbol}
-                    </div>
-                ))
-            } */}
-
-
-
+            <TradeStatisticsPanel StatisticsData={StatisticsData}/>
+            <ReturnOfDistributionPanel TradeDatas={trades}/>
         </div>
     );
 }
