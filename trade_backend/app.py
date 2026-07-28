@@ -29,11 +29,15 @@ async def GetTradeData(
     EndDate : datetime,
     SymbolName : str):
 
-    print("lasdjflkasjdflsj")
     print(StartDate)
     print(EndDate)
 
     trades = GetTrades(StartDate,EndDate,SymbolName)
+
+    sum = 0
+    for trade in trades :
+        sum  =sum + trade.Pnl
+        trade.TotalPnl = sum 
 
     return trades
 

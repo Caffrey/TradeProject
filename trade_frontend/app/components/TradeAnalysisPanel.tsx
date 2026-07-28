@@ -1,6 +1,5 @@
 
-import Histogram from "./Histogram";
-
+import TradeChart from "./TradeChart";
 
 export default async function TradeAnalysisPanel
 (
@@ -35,23 +34,27 @@ export default async function TradeAnalysisPanel
         );
 
         trades = await res.json();
-        console.log(trades)
      }
 
     return(
 
-        <div>
+        <div >
             <h2>
                 Trade Result
             </h2>
 
-            {
+            <TradeChart TradeRecords={trades} />
+
+            {/* {
            trades.map((trade:any)=>(
                     <div>
                         {trade.Symbol}
                     </div>
                 ))
-            }
+            } */}
+
+
+
         </div>
     );
 }

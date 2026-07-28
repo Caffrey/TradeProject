@@ -1,53 +1,64 @@
-"use client";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { CartesianGrid, Legend, Line, LineChart, XAxis, YAxis } from 'recharts';
 import { RechartsDevtools } from '@recharts/devtools';
-const Data = [
+
+// #region Sample data
+const data = [
+  {
+    name: 'Page A',
+    uv: 400,
+    pv: 2400,
+    amt: 2400,
+  },
+  {
+    name: 'Page B',
+    uv: 300,
+    pv: 4567,
+    amt: 2400,
+  },
+  {
+    name: 'Page C',
+    uv: 320,
+    pv: 1398,
+    amt: 2400,
+  },
+  {
+    name: 'Page D',
+    uv: 200,
+    pv: 9800,
+    amt: 2400,
+  },
+  {
+    name: 'Page E',
+    uv: 278,
+    pv: 3908,
+    amt: 2400,
+  },
+  {
+    name: 'Page F',
+    uv: 189,
+    pv: 4800,
+    amt: 2400,
+  },
+];
+
+// #endregion
+export default function Histogram(
+     {
+        TradeRecords
+    }:
     {
-        range:"-30,-10",
-        count : 20
-    },
-     {
-        range:"0-10",
-        count : 23
-    },
-     {
-        range:"12-30",
-        count : 3
-    },
-     {
-        range:"0-10",
-        count : 4
-    },
-]
-
-// Summary
-// 胜率：Win单Lost单
-// 平均盈利
-//Profit Factor：+总盈利+总亏损
-//期望值
-//夏普值
-const Histogram = () => {
+        TradeRecords?:[any]
+    }
+) {
+    console.log(TradeRecords)
   return (
-    <BarChart
-      style={{ width: '100%', maxWidth: '700px', maxHeight: '70vh', aspectRatio: 1.618 }}
-      responsive
-      data={Data}
-      margin={{
-        top: 5,
-        right: 0,
-        left: 0,
-        bottom: 5,
-      }}
-    >
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="range" />
-      <YAxis width="auto" />
-      <Tooltip />
+    <LineChart style={{ width: '100%', aspectRatio: 1.618, maxWidth: 600 }} responsive data={TradeRecords}>
+      <CartesianGrid />
+      <Line dataKey="TotalPnl" />
+      {/* <XAxis dataKey="id" /> */}
+      <YAxis />
       <Legend />
-      <Bar dataKey="count" fill="#8884d8" activeBar={{ fill: 'pink', stroke: 'blue' }} radius={[10, 10, 0, 0]} />
       <RechartsDevtools />
-    </BarChart>
+    </LineChart>
   );
-};
-
-export default Histogram;
+}
