@@ -84,4 +84,5 @@ Server
 ！！！rechart的问题可能是包体问题，修复就好了！！！
 
 
-增加Win的Dor和输的Dor
+增加Win的Dor和输的Dor√
+Filter的值要保留
