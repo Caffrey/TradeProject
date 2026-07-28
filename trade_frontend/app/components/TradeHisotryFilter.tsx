@@ -3,10 +3,10 @@
 import { useRouter } from "next/navigation";
 
 const Symbol = [
+    { name:"MNQ" },
     { name:"GC" },
     { name:"NQ" },
     { name:"ES" },
-    { name:"MNQ" }
 ];
 
 
@@ -41,7 +41,8 @@ export default function TradeHisotryFilter()
 
 
     const start = new Date();
-    start.setDate(start.getDate() - 30);
+    start.setHours(0)
+    start.setDate(start.getDate() - 20);
 
     const startDate = formatDateTime(start);
 

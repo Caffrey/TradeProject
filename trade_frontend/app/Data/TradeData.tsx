@@ -130,7 +130,8 @@ export function StatisticsReturnOfDistribution(TradeDatas: TradeData[], bin: num
         data.name = `${min}-${min + bin}`;
         BinDatas.push(data);
     }
-    BinDatas[BinDatas.length-1].EndBin += 1
+    if(BinDatas.length > 0)
+        BinDatas[BinDatas.length-1].EndBin += 1
 
     TradeDatas.forEach((item: TradeData) => {
 
