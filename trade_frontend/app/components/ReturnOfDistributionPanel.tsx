@@ -27,9 +27,9 @@ export default function ReturnOfDistributionPanel(
     let TradeDorData:TradeDorData[] = StatisticsReturnOfDistribution(TradeDatas,100);
 
     return (
-    <div>
+    <div className="flex w-full">
 
-    <div>
+    <div className="flex-1">
         <h2>Tick Distribution</h2>
     <BarChart
       style={{ width: '100%', maxWidth: '700px', maxHeight: '70vh', aspectRatio: 1.618 }}
@@ -52,29 +52,29 @@ export default function ReturnOfDistributionPanel(
     </BarChart>
     </div>
 
-      <div>
+      <div className="flex-1">
         <h2>Tick Distribution Percent</h2>
 
-    <BarChart
-      style={{ width: '100%', maxWidth: '700px', maxHeight: '70vh', aspectRatio: 1.618 }}
-      responsive
-      data={TradeDorData}
-      margin={{
-        top: 5,
-        right: 0,
-        left: 0,
-        bottom: 5,
-      }}
-    >
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="name" />
-      <YAxis width="auto" />
-      <Tooltip />
-      <Legend />
-      <Bar dataKey="Percent" fill="#8884d8" activeBar={{ fill: 'pink', stroke: 'blue' }} radius={[10, 10, 0, 0]} />
-      <RechartsDevtools />
-    </BarChart>
-    </div>
+        <BarChart
+          style={{ width: '100%', maxWidth: '700px', maxHeight: '70vh', aspectRatio: 1.618 }}
+          responsive
+          data={TradeDorData}
+          margin={{
+            top: 5,
+            right: 0,
+            left: 0,
+            bottom: 5,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis width="auto" />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="Percent" fill="#8884d8" activeBar={{ fill: 'pink', stroke: 'blue' }} radius={[10, 10, 0, 0]} />
+          <RechartsDevtools />
+        </BarChart>
+      </div>
 
     </div>
   );

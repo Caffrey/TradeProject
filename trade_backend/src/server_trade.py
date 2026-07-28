@@ -1,0 +1,121 @@
+
+import re
+from datetime import datetime
+from pathlib import Path
+
+from sqlalchemy.orm import declarative_base
+from sqlalchemy import Column, BigInteger, Text,DateTime,Numeric
+from sqlalchemy.orm import Session
+from pandas import DataFrame
+import pandas as pd
+
+from . import env as GlobalEnv
+from fastapi import APIRouter
+
+
+
+
+class User(declarative_base()):
+    __tablename__ = 'User'
+
+    ID = Column(BigInteger, primary_key=True)
+    UserName = Column(Text)
+    Password = Column(Text)
+
+class TradeRecord(declarative_base()):
+    __tablename__= "TradeRecord"
+    ID = Column(BigInteger,primary_key=True,autoincrement=True)
+    Symbol = Column(Text)
+    OpenTime = Column(DateTime(timezone=False))
+    CloseTime = Column(DateTime(timezone=False))
+    Lot = Column(BigInteger)
+    Tick = Column(BigInteger)
+    Pnl = Column(Numeric)
+    SourceSymbol = Column(Text)
+
+
+def Trade_FilterSymbolName(Name:str):
+    code = Name
+
+    match = re.search(
+            r'#?([A-Z]{1,3})(?=[FGHJKMNQUVXZ]\d|$)',
+            code
+        )
+
+    if not match:
+        raise ValueError(f"非法代码: {code}")
+
+    return match.group(1)
+
+
+
+def Trade_ProcessAtasDataFrame(df : DataFrame):
+    arr = []
+    for index, row in df.iterrows():
+        trade = TradeRecord()
+        trade.Symbol =  Trade_FilterSymbolName(row['Instrument'])
+        trade.SourceSymbol = row['Instrument']
+        trade.OpenTime = row['Open time']
+        trade.Lot = row['Open volume']
+        trade.CloseTime = row['Close time'] if pd.notna(row['Close time']) else row["Open time"]
+        trade.Tick = row['Profit (ticks)']
+        trade.Pnl = row['PnL']
+        arr.append(trade)
+    GlobalEnv.GlobalDataBaseSession.add_all(arr)
+    GlobalEnv.GlobalDataBaseSession.commit()
+
+
+
+def Trade_TradeImport(df : DataFrame, TradeSheetType : str ):
+    match TradeSheetType:
+        case "Atas" :
+            Trade_ProcessAtasDataFrame(df)
+
+def Trade_RefreshAtasDataBase():
+    folder = Path(GlobalEnv.AtasTradePath)
+    for file in folder.glob("*.xlsx"):
+        df = pd.read_excel(file,sheet_name="Journal")
+        Trade_TradeImport(df,"Atas")
+
+
+def Trade_GetTrades(
+    
+    StartDate : datetime,
+    EndDate : datetime,
+    Symbol : str):
+    selectResult = GlobalEnv.GlobalDataBaseSession.query(TradeRecord).where(
+        TradeRecord.Symbol.contains(Symbol),
+        TradeRecord.CloseTime <= EndDate,
+        TradeRecord.OpenTime >= StartDate
+    )
+    trades = selectResult.all()
+    return trades;
+
+def Trade_ClearTable():
+    GlobalEnv.GlobalDataBaseSession.query(TradeRecord).delete()
+    GlobalEnv.GlobalDataBaseSession.commit()
+
+
+
+
+#api
+Trade_Router = APIRouter()
+
+
+@Trade_Router.get('/')
+async def root():
+    return {'message': 'hello world'}
+
+@Trade_Router.post('/refreshTradeRecordDataBase')
+async def RefreshTradeRecordDataBAse():
+    Trade_RefreshAtasDataBase()
+
+@Trade_Router.get('/GetTradeData')
+async def GetTradeData(
+    StartDate : datetime,
+    EndDate : datetime,
+    SymbolName : str):
+
+    trades = Trade_GetTrades(StartDate,EndDate,SymbolName)
+
+    return trades

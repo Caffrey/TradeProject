@@ -1,5 +1,7 @@
 "use clinet"
 import { TradeStatisticsData } from "../data/TradeData"
+import NormalCardPanel from "./NormalCardPanel";
+import {NormalCardPanel2} from "./NormalCardPanel";
 
 export default function TradeStatisticsPanel(
     {StatisticsData}:
@@ -8,20 +10,33 @@ export default function TradeStatisticsPanel(
 {
     return (
         <div>
-            <h2>Trade Statistics Data</h2>
+            <h2 className="text-2xl font-bold">Trade Statistics Data</h2>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
 
-            <div>ProfitFactor:{StatisticsData.ProfitFactor.toFixed(2)} </div>
-            <div>TradeCount:{StatisticsData.TradeCount} </div>
-            <div>TotalProfit:{StatisticsData.TotalProfit.toFixed(0)} </div>
-            <div>TotalLost:{StatisticsData.TotalLost.toFixed(0)} </div>
-            <div>WinRate:{StatisticsData.WinRate.toFixed(2)} %</div>
-            <div>AverageWin:{StatisticsData.AverageWin.toFixed(2)} </div>
-            <div>AverageLost:{StatisticsData.AverageLost.toFixed(2)} </div>
-            <div>----</div>
-            <div>HistoryPeak:{StatisticsData.HistoryPeak.toFixed(0)} </div>
-            <div>MaxDrawback:{StatisticsData.MaxDrawback.toFixed(0)} </div>
-            <div>MaxDrawbackRate:{StatisticsData.MaxDrawbackRate.toFixed(2)}% </div>
+                    <NormalCardPanel
+                        Title="Net Pnl"
+                        Content={(StatisticsData.ProfitFactor-StatisticsData.TotalLost).toFixed(0)}
+                        SubContent={`${StatisticsData.TradeCount}Trades`}
+                    />
 
+                    <NormalCardPanel
+                        Title="Win Rate"
+                        Content={`${StatisticsData.WinRate.toFixed(2)} %`}
+                        SubContent={`${StatisticsData.WinCount} / ${StatisticsData.LostCount}`}
+                    />
+
+                    <NormalCardPanel2
+                        Title={`Avg Win/Lost: ${StatisticsData.ProfitFactor.toFixed(2)}`}
+                        Content={`Win $${StatisticsData.AverageWin.toFixed(0)}`}
+                        SubContent={`Lost -$${StatisticsData.AverageLost.toFixed(0)}`}
+                    />
+
+                    <NormalCardPanel
+                        Title="Max DrawDown"
+                        Content={`-$${StatisticsData.MaxDrawback.toFixed(0)}`}
+                        SubContent={`$${StatisticsData.MaxDrawbackRate.toFixed(2)}%`}
+                    />
+                </div>
         </div>
     );
 

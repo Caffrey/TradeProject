@@ -2,10 +2,6 @@ import Link from "next/link";
 
 const MenuItems = [
     {
-        label:"Trade Import",
-        herf :"/TradeNote/TradeImport"
-    },
-    {
         label:"Montly Trade Analysis",
         herf :"/TradeNote/MonthTradeAnalysis"
     },

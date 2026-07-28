@@ -26,11 +26,8 @@ export default async function TradeAnalysisPanel
 
     return(
         <div >
-            <h2>
-                Trade Result
-            </h2>
-            <TradeChart TradeRecords={trades} />
             <TradeStatisticsPanel StatisticsData={StatisticsData}/>
+            <TradeChart TradeRecords={trades} />
             <ReturnOfDistributionPanel TradeDatas={trades}/>
         </div>
     );

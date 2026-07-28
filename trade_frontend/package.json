@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@recharts/devtools": "^0.0.14",
+    "daisyui": "^5.7.4",
     "next": "^16.2.12",
     "react": "19.2.4",
     "react-dom": "19.2.4",

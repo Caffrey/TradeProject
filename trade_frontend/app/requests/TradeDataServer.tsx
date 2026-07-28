@@ -17,7 +17,7 @@ export async function Request_GetTrades(
      {
 
          const params = new URLSearchParams({
-             StartDate,
+            StartDate,
             EndDate,
             SymbolName
          });

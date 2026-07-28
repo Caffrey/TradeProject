@@ -1,113 +1,22 @@
-from src.env import GlobalEnv
+from . import env as GlobalEnv
+
+from .server_trade import *
 
 from sqlalchemy import create_engine 
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import Session
 from sqlalchemy.orm import declarative_base
-from sqlalchemy import Column, BigInteger, Text,DateTime,Numeric
-import pandas as pd
-from pandas import DataFrame
-from datetime import datetime
-from pathlib import Path
-import re
-
-Base = declarative_base()
-
-class User(Base):
-    __tablename__ = 'User'
-
-    ID = Column(BigInteger, primary_key=True)
-    UserName = Column(Text)
-    Password = Column(Text)
-
-class TradeRecord(Base):
-    __tablename__= "TradeRecord"
-    ID = Column(BigInteger,primary_key=True,autoincrement=True)
-    Symbol = Column(Text)
-    OpenTime = Column(DateTime(timezone=False))
-    CloseTime = Column(DateTime(timezone=False))
-    Lot = Column(BigInteger)
-    Tick = Column(BigInteger)
-    Pnl = Column(Numeric)
-    SourceSymbol = Column(Text)
 
 
+def InitDataBase():
+    Base = declarative_base()
+    engine = create_engine(GlobalEnv.DATABASE_URL)
+    Session_local = sessionmaker(bind=engine,
+                        autoflush=False,
+                        autocommit=False)
 
-engine = create_engine(GlobalEnv.DATABASE_URL)
-SessionA = sessionmaker(bind=engine,
-                       autoflush=False,
-                       autocommit=False)
+    Base.metadata.create_all(bind=engine)
 
-#API
-
-DataBaseSession = SessionA()
-Base.metadata.create_all(bind=engine)
-
-def FilterSymbolName(Name:str):
-    code = Name
-
-    match = re.search(
-            r'#?([A-Z]{1,3})(?=[FGHJKMNQUVXZ]\d|$)',
-            code
-        )
-
-    if not match:
-        raise ValueError(f"非法代码: {code}")
-
-    return match.group(1)
+    return Session_local()
 
 
-
-def ProcessAtasDataFrame(df : DataFrame):
-    arr = []
-    for index, row in df.iterrows():
-        trade = TradeRecord()
-        trade.Symbol = FilterSymbolName(row['Instrument'])
-        trade.SourceSymbol = row['Instrument']
-        trade.OpenTime = row['Open time']
-        trade.Lot = row['Open volume']
-        trade.CloseTime = row['Close time'] if pd.notna(row['Close time']) else row["Open time"]
-        trade.Tick = row['Profit (ticks)']
-        trade.Pnl = row['PnL']
-        arr.append(trade)
-    DataBaseSession.add_all(arr)
-    DataBaseSession.commit()
-
-
-
-def TradeImport(df : DataFrame, TradeSheetType : str ):
-    match TradeSheetType:
-        case "Atas" :
-            ProcessAtasDataFrame(df)
-
-def RefreshAtasDataBase():
-    folder = Path(GlobalEnv.AtasTradePath)
-    for file in folder.glob("*.xlsx"):
-        df = pd.read_excel(file,sheet_name="Journal")
-        TradeImport(df,"Atas")
-
-
-def GetTrades(
-    StartDate : datetime,
-    EndDate : datetime,
-    Symbol : str):
-    selectResult = DataBaseSession.query(TradeRecord).where(
-        TradeRecord.Symbol.contains(Symbol),
-        TradeRecord.CloseTime <= EndDate,
-        TradeRecord.OpenTime >= StartDate
-    )
-    trades = selectResult.all()
-    return trades;
-
-def ClearTable():
-    DataBaseSession.query(TradeRecord).delete()
-    DataBaseSession.commit()
-
-# ClearTable()
-# RefreshAtasDataBase()
-
-
-start = datetime(2026,7,15)
-end = datetime(2026,7,27)
-# a = GetTrades(start,end,"MNQ")
-# alltrade = DataBaseSession.query(TradeRecord).all()

@@ -8,12 +8,13 @@ export default function TradeChart(
         TradeRecords
     }:
     {
-        TradeRecords?:TradeData[]| undefined
+        TradeRecords:TradeData[]
     }
 ) {
+
     return (
-        <div>
-            <h2>Equity Curve</h2>
+        <div className="card bg-base-100 w-96 shadow-sm w-full">
+            <h2 className="text-3xl font-bold">Equity Curve</h2>
             <Histogram TradeRecords={TradeRecords} />
         </div>
     );
