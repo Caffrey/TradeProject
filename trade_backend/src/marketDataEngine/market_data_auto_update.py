@@ -7,7 +7,6 @@ from datetime import date
 from . import market_data as MarketDataEngine
 
 
-
 class MarketDataConfigSymbolItem(BaseModel):
         name:str
         symbol:str
@@ -78,5 +77,3 @@ def MakeUpdatePackges(item:MarketDataConfigItem, startDate : date, endDate:date)
     result.startDate = startDate
     result.endDate = endDate
     return result
-
-            

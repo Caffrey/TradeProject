@@ -23,14 +23,14 @@ Trade_RefreshAtasDataBase()
 
 
 
-config = LoadConfig()
-d = date(2026,7,1)
-result:UpdatePackage = MakeUpdatePackges(config.future,d,date.today())
-# result2 = MakeUpdatePackges(config.froex)
-# result3 = MakeUpdatePackges(config.future)
-asyncio.create_task(
-    AutoUpdate(result,5)
-)
+# config = LoadConfig()
+# d = date(2026,7,1)
+# result:UpdatePackage = MakeUpdatePackges(config.future,d,date.today())
+# # result2 = MakeUpdatePackges(config.froex)
+# # result3 = MakeUpdatePackges(config.future)
+# asyncio.create_task(
+#     AutoUpdate(result,5)
+# )
 
 
 

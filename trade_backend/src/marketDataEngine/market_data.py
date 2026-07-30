@@ -8,6 +8,8 @@ from openbb import obb
 from pandas import DataFrame
 from datetime import date
 from src.database_interface import UpsertAll
+from fastapi import APIRouter
+from fastapi.encoders import jsonable_encoder
 
 
 class DB_CandleData(declarative_base()):
@@ -21,11 +23,13 @@ class DB_CandleData(declarative_base()):
     Date = Column(DateTime)
     Symbol = Column(Text)
     TimeFrame = Column(Text)
+    Market = Column(Text)
     __table_args__ = (
         UniqueConstraint(
             "Symbol",
             "TimeFrame",
             "Date",
+            "Market",
             name="uq_market_bar"
         ),
     )
@@ -45,7 +49,7 @@ def DataFrameToDbData(df:DataFrame,market,interval):
         candle.Volume = row['volume']
         candle.TimeFrame = interval
         candle.Date = row['date']
-        candle.market = market
+        candle.Market = market
         arr.append(candle)
     return arr
 
@@ -65,9 +69,32 @@ def DownHistoryDateToDataBase(market:str, Symbol:List[str], interval:str, startD
         data = obb.currency.price.historical(symbol=Symbol,
                                            interval=interval, start_date=startDate,end_date=endDate)
     AddDataFrameToDataBase(data,market,interval)
-    
+
+
+
 
 def AddDataFrameToDataBase(data,market:str, interval:str):
     arr = DataFrameToDbData(data.to_dataframe(), market=market,interval=interval)
     UpsertAll(GlobalEnv.GlobalDataBaseSession,DB_CandleData,arr)
     
+
+
+MarketDataRoute = APIRouter()
+
+def QueryToJson(query_result):
+    return jsonable_encoder([
+        dict(row._mapping)
+        if hasattr(row, "_mapping")
+        else row
+        for row in query_result
+    ])
+
+@MarketDataRoute.get('/market_data/GetValidSymbol')
+async def GetTradeData(market:str):
+    result = GlobalEnv.GlobalDataBaseSession.query(DB_CandleData.Symbol).filter(DB_CandleData.Market == market).distinct().all()
+    return QueryToJson(result)
+
+@MarketDataRoute.get('/market_data/HistoryData')
+async def GetTradeData(market:str, symbol:str):
+    result = GlobalEnv.GlobalDataBaseSession.query(DB_CandleData).filter(DB_CandleData.Market == market, DB_CandleData.Symbol == symbol).distinct().all()
+    return QueryToJson(result)
