@@ -1,6 +1,7 @@
 from . import env as GlobalEnv
 
 from .server_trade import *
+from .marketDataEngine.market_data import DB_CandleData
 
 from sqlalchemy import create_engine 
 from sqlalchemy.orm import sessionmaker
@@ -17,7 +18,6 @@ def InitDataBase():
 
     User.metadata.create_all(bind=engine)
     TradeRecord.metadata.create_all(bind=engine)
+    DB_CandleData.metadata.create_all(bind=engine)
 
     return Session_local()
-
-
