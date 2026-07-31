@@ -11,6 +11,7 @@ import pandas as pd
 
 from . import env as GlobalEnv
 from fastapi import APIRouter
+from .meta_trade_module import ExpotallMetaTradeHistory
 
 
 
@@ -48,6 +49,20 @@ def Trade_FilterSymbolName(Name:str):
     return match.group(1)
 
 
+def Trade_ProcessMT5DataFrame(df : DataFrame):
+    arr = []
+    for index, row in df.iterrows():
+        trade = TradeRecord()
+        trade.Symbol =  row['symbol']
+        trade.SourceSymbol = row['symbol']
+        trade.OpenTime = row['entry_time']
+        trade.Lot = row['volume']
+        trade.CloseTime = row['exit_time']
+        trade.Tick = row['profit']
+        trade.Pnl = row['profit']
+        arr.append(trade)
+    GlobalEnv.GlobalDataBaseSession.add_all(arr)
+    GlobalEnv.GlobalDataBaseSession.commit()
 
 def Trade_ProcessAtasDataFrame(df : DataFrame):
     arr = []
@@ -70,12 +85,22 @@ def Trade_TradeImport(df : DataFrame, TradeSheetType : str ):
     match TradeSheetType:
         case "Atas" :
             Trade_ProcessAtasDataFrame(df)
+        case "MT5":
+            Trade_ProcessMT5DataFrame(df)
 
 def Trade_RefreshAtasDataBase():
     folder = Path(GlobalEnv.AtasTradePath)
     for file in folder.glob("*.xlsx"):
         df = pd.read_excel(file,sheet_name="Journal")
         Trade_TradeImport(df,"Atas")
+
+    Trade_RefreshMT5()
+
+def Trade_RefreshMT5():
+    ExpotallMetaTradeHistory()
+    df = pd.read_csv(GlobalEnv.ExnessTradePath)
+    Trade_TradeImport(df,"MT5")
+
 
 
 def Trade_GetTrades(
@@ -95,6 +120,12 @@ def Trade_ClearTable():
     GlobalEnv.GlobalDataBaseSession.query(TradeRecord).delete()
     GlobalEnv.GlobalDataBaseSession.commit()
 
+## mt5 
+
+
+
+
+##
 
 
 
@@ -119,3 +150,5 @@ async def GetTradeData(
     trades = Trade_GetTrades(StartDate,EndDate,SymbolName)
 
     return trades
+
+

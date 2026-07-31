@@ -7,6 +7,13 @@ const Symbol = [
     { name:"GC" },
     { name:"NQ" },
     { name:"ES" },
+    { name:"XAUUSDm" },
+    { name:"USTECm" },
+    { name:"JP225m" },
+    { name:"BTCUSDm" },
+    { name:"AAPLm" },
+    { name:"ETHUSDm" },
+    { name:"EURUSDm" },
 ];
 
 
