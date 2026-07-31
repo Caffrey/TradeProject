@@ -1,0 +1,142 @@
+{
+    "stock":
+    {
+        "market":"stock",
+        "intervals" : ["1h"],
+        "symbols":
+        [
+            {
+                "name": "NVIDIA",
+                "symbol": "NVDA"
+            },
+            {
+                "name": "Microsoft",
+                "symbol": "MSFT"
+            },
+            {
+                "name": "Apple",
+                "symbol": "AAPL"
+            },
+            {
+                "name": "Amazon",
+                "symbol": "AMZN"
+            },
+            {
+                "name": "Alphabet (Google)",
+                "symbol": "GOOGL"
+            },
+            {
+                "name": "Meta Platforms",
+                "symbol": "META"
+            },
+            {
+                "name": "Broadcom",
+                "symbol": "AVGO"
+            },
+            {
+                "name": "Tesla",
+                "symbol": "TSLA"
+            },
+            {
+                "name": "Oracle",
+                "symbol": "ORCL"
+            },
+            {
+                "name": "Adobe",
+                "symbol": "ADBE"
+            },
+            {
+                "name": "Advanced Micro Devices",
+                "symbol": "AMD"
+            },
+            {
+                "name": "Qualcomm",
+                "symbol": "QCOM"
+            },
+            {
+                "name": "Costco",
+                "symbol": "COST"
+            },
+            {
+                "name": "Netflix",
+                "symbol": "NFLX"
+            }
+        ]
+    },
+    "future":
+    {
+        "market":"future",
+        "intervals" : ["1h","1d"],
+        "symbols":
+        [
+           {
+            "name": "Nasdaq 100 Futures",
+            "symbol": "NQ"
+            },
+            {
+                "name": "S&P 500 Futures",
+                "symbol": "ES"
+            },
+            {
+                "name": "Dow Jones Futures",
+                "symbol": "YM"
+            },
+            {
+                "name": "Russell 2000 Futures",
+                "symbol": "RTY"
+            },
+            {
+                "name": "Nikkei 225 Futures",
+                "symbol": "NKD"
+            },
+            {
+                "name": "Gold Futures",
+                "symbol": "GC"
+            },
+            {
+                "name": "Crude Oil Futures",
+                "symbol": "CL"
+            },
+            {
+                "name": "Silver Futures",
+                "symbol": "SI"
+            }
+        ]
+    },
+    "froex":
+    {
+        "market":"froex",
+        "intervals" : ["1m","1h","1D"],
+        "symbols":
+        [
+            {
+                "name": "EUR/USD",
+                "symbol": "EURUSD"
+            },
+            {
+                "name": "GBP/USD",
+                "symbol": "GBPUSD"
+            },
+            {
+                "name": "AUD/USD",
+                "symbol": "AUDUSD"
+            },
+            {
+                "name": "NZD/USD",
+                "symbol": "NZDUSD"
+            },
+            {
+                "name": "USD/JPY",
+                "symbol": "USDJPY"
+            },
+            {
+                "name": "USD/CHF",
+                "symbol": "USDCHF"
+            },
+            {
+                "name": "USD/CAD",
+                "symbol": "USDCAD"
+            }
+        ]
+    }
+}
