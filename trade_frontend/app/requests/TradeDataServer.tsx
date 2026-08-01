@@ -4,6 +4,17 @@ import { PreProcessTradeData } from "../data/TradeData";
 const ServerPath = "http://localhost:8000/"
 
 
+export async function Request_RefreshAtasTrades()
+{
+
+}
+
+export async function Request_RefreshMT5Trades()
+{
+
+}
+
+
 export async function Request_GetTrades(
      StartDate?:string,
         EndDate?:string,

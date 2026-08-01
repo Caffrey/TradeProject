@@ -2,7 +2,7 @@ import MetaTrader5 as mt5
 import pandas as pd
 from pandas import DataFrame
 from datetime import datetime
-from. import env as GlobalEnv
+from src import env as GlobalEnv
 
 def ExpotallMetaTradeHistory():
     mt5.initialize()

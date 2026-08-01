@@ -1,5 +1,5 @@
 from openbb import obb
-from src.marketDataEngine.market_data_auto_update import *
+from src.market_data_engine.market_data_auto_update import *
 from datetime import datetime,date
 import json
 import asyncio

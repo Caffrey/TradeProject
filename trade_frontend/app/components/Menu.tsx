@@ -8,6 +8,10 @@ const MenuItems = [
     {
         label:"Trade Analysis",
         herf :"/TradeNote/TradeAnalysis"
+    },
+    {
+         label:"Trade Improt",
+        herf :"/TradeNote/TradeImport"
     }
     
 ];

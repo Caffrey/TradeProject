@@ -1,15 +1,13 @@
 from typing import List
 
 from sqlalchemy.orm import declarative_base
+import src.env as GlobalEnv 
 
 from sqlalchemy import Column, BigInteger,DateTime, Text,Numeric,UniqueConstraint
-import src.env as GlobalEnv 
 from openbb import obb
 from pandas import DataFrame
 from datetime import date
-from src.database_interface import UpsertAll
-from fastapi import APIRouter
-from fastapi.encoders import jsonable_encoder
+from src.database_module.database_interface import UpsertAll
 
 
 class DB_CandleData(declarative_base()):
@@ -78,23 +76,3 @@ def AddDataFrameToDataBase(data,market:str, interval:str):
     UpsertAll(GlobalEnv.GlobalDataBaseSession,DB_CandleData,arr)
     
 
-
-MarketDataRoute = APIRouter()
-
-def QueryToJson(query_result):
-    return jsonable_encoder([
-        dict(row._mapping)
-        if hasattr(row, "_mapping")
-        else row
-        for row in query_result
-    ])
-
-@MarketDataRoute.get('/market_data/GetValidSymbol')
-async def GetTradeData(market:str):
-    result = GlobalEnv.GlobalDataBaseSession.query(DB_CandleData.Symbol).filter(DB_CandleData.Market == market).distinct().all()
-    return QueryToJson(result)
-
-@MarketDataRoute.get('/market_data/HistoryData')
-async def GetTradeData(market:str, symbol:str):
-    result = GlobalEnv.GlobalDataBaseSession.query(DB_CandleData).filter(DB_CandleData.Market == market, DB_CandleData.Symbol == symbol).distinct().all()
-    return QueryToJson(result)

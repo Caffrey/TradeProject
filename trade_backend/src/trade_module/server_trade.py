@@ -9,11 +9,8 @@ from sqlalchemy.orm import Session
 from pandas import DataFrame
 import pandas as pd
 
-from . import env as GlobalEnv
-from fastapi import APIRouter
+from .. import env as GlobalEnv
 from .meta_trade_module import ExpotallMetaTradeHistory
-
-
 
 
 class User(declarative_base()):
@@ -33,6 +30,9 @@ class TradeRecord(declarative_base()):
     Tick = Column(BigInteger)
     Pnl = Column(Numeric)
     SourceSymbol = Column(Text)
+    Acount = Column(Text)
+    TradeRecordType = Column(Text)
+
 
 
 def Trade_FilterSymbolName(Name:str):
@@ -94,7 +94,6 @@ def Trade_RefreshAtasDataBase():
         df = pd.read_excel(file,sheet_name="Journal")
         Trade_TradeImport(df,"Atas")
 
-    Trade_RefreshMT5()
 
 def Trade_RefreshMT5():
     ExpotallMetaTradeHistory()
@@ -104,7 +103,6 @@ def Trade_RefreshMT5():
 
 
 def Trade_GetTrades(
-    
     StartDate : datetime,
     EndDate : datetime,
     Symbol : str):
@@ -119,36 +117,4 @@ def Trade_GetTrades(
 def Trade_ClearTable():
     GlobalEnv.GlobalDataBaseSession.query(TradeRecord).delete()
     GlobalEnv.GlobalDataBaseSession.commit()
-
-## mt5 
-
-
-
-
-##
-
-
-
-#api
-Trade_Router = APIRouter()
-
-
-@Trade_Router.get('/')
-async def root():
-    return {'message': 'hello world'}
-
-@Trade_Router.post('/refreshTradeRecordDataBase')
-async def RefreshTradeRecordDataBAse():
-    Trade_RefreshAtasDataBase()
-
-@Trade_Router.get('/GetTradeData')
-async def GetTradeData(
-    StartDate : datetime,
-    EndDate : datetime,
-    SymbolName : str):
-
-    trades = Trade_GetTrades(StartDate,EndDate,SymbolName)
-
-    return trades
-
 
