@@ -13,3 +13,14 @@ GlobalServerApp:Optional[FastAPI] = None
 GlobalDataBaseSession:Optional[Session] = None
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+
+
+from fastapi.encoders import jsonable_encoder
+def QueryToJson(query_result):
+    return jsonable_encoder([
+        dict(row._mapping)
+        if hasattr(row, "_mapping")
+        else row
+        for row in query_result
+    ])

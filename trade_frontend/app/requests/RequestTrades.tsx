@@ -8,7 +8,7 @@ export async function Request_RefreshAtasTrades()
     const params = new URLSearchParams({ RecordType:"ATAS" });
 
     const res = await fetch(
-    `${ServerPath}RefreshTradeRecordDataBase?${params.toString()}`,
+    `${ServerPath}rest_trade/RefreshTradeRecordDataBase?${params.toString()}`,
     {
         cache:"no-store",
         method:"POST",
@@ -23,14 +23,29 @@ export async function Request_RefreshMT5Trades()
             });
 
         const res = await fetch(
-        `${ServerPath}RefreshTradeRecordDataBase?${params.toString()}`,
+        `${ServerPath}rest_trade/RefreshTradeRecordDataBase?${params.toString()}`,
         {
             cache:"no-store",
             method:"POST",
         }
     );
-
 }
+
+
+export async function Request_TradeValidSymbols()
+{
+    console.log("askdjfkasdf")
+    console.log(`${ServerPath}rest_trade/GetValidSymbol`)
+    const res = await fetch(
+        `${ServerPath}rest_trade/GetValidSymbol`,
+        {
+            cache:"no-store",
+            method:"GET"
+        }
+    );
+    return res.json()
+}
+
 
 
 export async function Request_GetTrades(
@@ -53,7 +68,7 @@ export async function Request_GetTrades(
 
           const res = await fetch(
 
-            `${ServerPath}GetTradeData?${params.toString()}`,
+            `${ServerPath}rest_trade/GetTradeData?${params.toString()}`,
             {
                 cache:"no-store"
             }

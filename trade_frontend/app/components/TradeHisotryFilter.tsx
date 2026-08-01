@@ -1,25 +1,40 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 
-const Symbol = [
-    { name:"MNQ" },
-    { name:"GC" },
-    { name:"NQ" },
-    { name:"ES" },
-    { name:"XAUUSDm" },
-    { name:"USTECm" },
-    { name:"JP225m" },
-    { name:"BTCUSDm" },
-    { name:"AAPLm" },
-    { name:"ETHUSDm" },
-    { name:"EURUSDm" },
-];
+
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { Request_TradeValidSymbols } from "../requests/RequestTrades";
+
+// const Symbol2 = [
+//     { name:"MNQ" },
+//     { name:"GC" },
+//     { name:"NQ" },
+//     { name:"ES" },
+//     { name:"XAUUSDm" },
+//     { name:"USTECm" },
+//     { name:"JP225m" },
+//     { name:"BTCUSDm" },
+//     { name:"AAPLm" },
+//     { name:"ETHUSDm" },
+//     { name:"EURUSDm" },
+// ];
 
 
 export default function TradeHisotryFilter()
 {
     const router = useRouter();
+    const [Symbols, setSymbols] = useState<any[]>([]);
+
+     useEffect(()=>{
+
+        async function LoadSymbols(){
+            const data = await Request_TradeValidSymbols();
+            setSymbols(data);
+        }
+        LoadSymbols();
+    },[]);
+
 
      function GetTradeData(e : React.FormEvent<HTMLFormElement>){
 
@@ -38,21 +53,19 @@ export default function TradeHisotryFilter()
         router.push(url)
     }
 
-   function formatDateTime(date: Date) {
-    return date.toLocaleString("sv-SE").replace(" ", "T").slice(0,16);
+   function formatDateTime(date: Date) 
+    {
+        return date.toLocaleString("sv-SE").replace(" ", "T").slice(0,16);
     }
 
+    //
     const now = new Date();
-
     const endDate = formatDateTime(now);
-
-
     const start = new Date();
     start.setHours(0)
     start.setDate(start.getDate() - 20);
-
     const startDate = formatDateTime(start);
-
+    //
 
     return(
         <div className="card w-96 bg-base-100 shadow-sm">
@@ -78,8 +91,8 @@ export default function TradeHisotryFilter()
                 <span className="label">Symbol</span>
 
                 <select name="SymbolName">
-                    {Symbol.map(item=>(
-                        <option value={item.name} key={item.name}>{item.name}</option>
+                    {Symbols.map(item=>(
+                        <option value={item.Symbol} key={item.Symbol}>{item.Symbol}</option>
                     ))}
                 </select>
                 

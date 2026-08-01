@@ -51,4 +51,8 @@ def Trade_ClearTable(RecordType:str):
     GlobalEnv.GlobalDataBaseSession.query(TradeRecord).filter(TradeRecord.TradeRecordType == RecordType).delete()
     GlobalEnv.GlobalDataBaseSession.commit()
 
+
+def GetValidSymbols():
+    result = GlobalEnv.GlobalDataBaseSession.query(TradeRecord.Symbol).distinct().all()
+    return GlobalEnv.QueryToJson(result)
 ##清理

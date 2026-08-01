@@ -159,7 +159,7 @@ export function StatisticsReturnOfDistribution(TradeDatas: TradeData[], bin: num
 
 export function PreProcessTradeData(TradeDatas: TradeData[]) {
     let EquityCurve: number = 0;
-
+    console.log(TradeDatas)
     let Order = 1;
     TradeDatas.forEach((item: TradeData) => {
         EquityCurve += item.Pnl;

@@ -1,7 +1,7 @@
 "use client"
 
 import { useForm } from "react-hook-form";
-import { Request_RefreshAtasTrades,Request_RefreshMT5Trades } from "@/app/requests/TradeDataServer";
+import { Request_RefreshAtasTrades,Request_RefreshMT5Trades } from "@/app/requests/RequestTrades";
 
 type FormData = {
 };

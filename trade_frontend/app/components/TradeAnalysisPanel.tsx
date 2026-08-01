@@ -3,7 +3,7 @@ import TradeChart from "./TradeChart";
 import TradeStatisticsPanel from "./TradeStatisticsPanel";
 import ReturnOfDistributionPanel from "./ReturnOfDistributionPanel";
 
-import { Request_GetTrades } from "../requests/TradeDataServer";
+import { Request_GetTrades } from "../requests/RequestTrades";
 import { TradeData,StatisticsTradeData,TradeStatisticsData} from "../data/TradeData";
 
 export default async function TradeAnalysisPanel

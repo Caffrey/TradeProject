@@ -1,7 +1,8 @@
 from fastapi import APIRouter
 from src.module.trade_module.server_trade import *
 from src.module.trade_module import trade_module_config as TradeModuleConfig 
-#api
+
+
 
 Trade_Router = APIRouter()
 
@@ -9,20 +10,22 @@ Trade_Router = APIRouter()
 async def root():
     return {'message': 'hello world'}
 
-@Trade_Router.post('/RefreshTradeRecordDataBase')
+@Trade_Router.post('/rest_trade/RefreshTradeRecordDataBase')
 async def RefreshTradeRecordDataBAse(RecordType:str):
     if RecordType == TradeModuleConfig.RECORD_TYPE_ATAS:
         print(RecordType)
-
         Trade_RefreshAtasDataBase()
-        print("atas update")
     elif RecordType == TradeModuleConfig.RECORD_TYPE_MT5:
         print(RecordType)
     
         Trade_RefreshMT5()
 
+@Trade_Router.get('/rest_trade/GetValidSymbol')
+async def GetTradeSymbols():
+    return GetValidSymbols()
 
-@Trade_Router.get('/GetTradeData')
+
+@Trade_Router.get('/rest_trade/GetTradeData')
 async def GetTradeData(
     StartDate : datetime,
     EndDate : datetime,
