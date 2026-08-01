@@ -7,7 +7,7 @@ from sqlalchemy import Column, BigInteger,DateTime, Text,Numeric,UniqueConstrain
 from openbb import obb
 from pandas import DataFrame
 from datetime import date
-from src.database_module.database_interface import UpsertAll
+from src.module.database_module.database_interface import UpsertAll
 
 
 class DB_CandleData(declarative_base()):

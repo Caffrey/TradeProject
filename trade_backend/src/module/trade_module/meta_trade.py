@@ -3,13 +3,14 @@ import pandas as pd
 from pandas import DataFrame
 from datetime import datetime
 from src import env as GlobalEnv
+from .trade_data import *
+from . import trade_module_config as TradeModuleConfig
 
 def ExpotallMetaTradeHistory():
     mt5.initialize()
     result:DataFrame = GetTradeJournry(trades=GetTradeHistory())
     result.to_csv(GlobalEnv.ExnessTradePath)
     mt5.shutdown()
-
 
 
 def GetTradeHistory():
@@ -74,3 +75,20 @@ def GetTradeJournry(trades:DataFrame):
         .reset_index()
     )
     return trade_df
+
+
+def Trade_ProcessMT5DataFrame(df : DataFrame):
+    arr = []
+    for index, row in df.iterrows():
+        trade = TradeRecord()
+        trade.Symbol =  row['symbol']
+        trade.SourceSymbol = row['symbol']
+        trade.OpenTime = row['entry_time']
+        trade.Lot = row['volume']
+        trade.CloseTime = row['exit_time']
+        trade.Tick = row['profit']
+        trade.Pnl = row['profit']
+        trade.TradeRecordType = TradeModuleConfig.RECORD_TYPE_MT5
+        arr.append(trade)
+    GlobalEnv.GlobalDataBaseSession.add_all(arr)
+    GlobalEnv.GlobalDataBaseSession.commit()

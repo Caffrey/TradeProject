@@ -1,7 +1,7 @@
-from .. import env as GlobalEnv
+from src import env as GlobalEnv
 
-from ..trade_module.server_trade import *
-from ..market_data_engine.market_data import DB_CandleData
+from src.module.trade_module.server_trade import *
+from src.module.market_data_engine.market_data import DB_CandleData
 
 from sqlalchemy import create_engine 
 from sqlalchemy.orm import sessionmaker

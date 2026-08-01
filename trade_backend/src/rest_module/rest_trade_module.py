@@ -1,6 +1,6 @@
 from fastapi import APIRouter
-from src.trade_module.meta_trade_module import *
-from src.trade_module.server_trade import *
+from src.module.trade_module.server_trade import *
+from src.module.trade_module import trade_module_config as TradeModuleConfig 
 #api
 
 Trade_Router = APIRouter()
@@ -9,11 +9,16 @@ Trade_Router = APIRouter()
 async def root():
     return {'message': 'hello world'}
 
-@Trade_Router.post('/refreshTradeRecordDataBase')
+@Trade_Router.post('/RefreshTradeRecordDataBase')
 async def RefreshTradeRecordDataBAse(RecordType:str):
-    if RecordType == "Atas":
+    if RecordType == TradeModuleConfig.RECORD_TYPE_ATAS:
+        print(RecordType)
+
         Trade_RefreshAtasDataBase()
-    elif RecordType == "MT5":
+        print("atas update")
+    elif RecordType == TradeModuleConfig.RECORD_TYPE_MT5:
+        print(RecordType)
+    
         Trade_RefreshMT5()
 
 
