@@ -70,36 +70,44 @@
         "symbols":
         [
            {
-            "name": "Nasdaq 100 Futures",
-            "symbol": "NQ"
+                "name": "Nasdaq 100 Futures",
+                "symbol": "NQ",
+                "category" : "Indices"
             },
             {
                 "name": "S&P 500 Futures",
-                "symbol": "ES"
+                "symbol": "ES",
+                "category" : "Indices"
             },
             {
                 "name": "Dow Jones Futures",
-                "symbol": "YM"
+                "symbol": "YM",
+                "category" : "Indices"
             },
             {
                 "name": "Russell 2000 Futures",
-                "symbol": "RTY"
+                "symbol": "RTY",
+                "category" : "Indices"
             },
             {
                 "name": "Nikkei 225 Futures",
-                "symbol": "NKD"
+                "symbol": "NKD",
+                "category" : "Indices"
             },
             {
                 "name": "Gold Futures",
-                "symbol": "GC"
+                "symbol": "GC",
+                "category" : "Commodity"
             },
             {
                 "name": "Crude Oil Futures",
-                "symbol": "CL"
+                "symbol": "CL",
+                "category" : "Commodity"
             },
             {
                 "name": "Silver Futures",
-                "symbol": "SI"
+                "symbol": "SI",
+                "category" : "Commodity"
             }
         ]
     },
@@ -110,32 +118,162 @@
         "symbols":
         [
             {
-                "name": "EUR/USD",
-                "symbol": "EURUSD"
+                "name": "Euro / US Dollar",
+                "symbol": "EURUSD",
+                "category": "Major"
             },
             {
-                "name": "GBP/USD",
-                "symbol": "GBPUSD"
+                "name": "British Pound / US Dollar",
+                "symbol": "GBPUSD",
+                "category": "Major"
             },
             {
-                "name": "AUD/USD",
-                "symbol": "AUDUSD"
+                "name": "US Dollar / Japanese Yen",
+                "symbol": "USDJPY",
+                "category": "Major"
             },
             {
-                "name": "NZD/USD",
-                "symbol": "NZDUSD"
+                "name": "US Dollar / Swiss Franc",
+                "symbol": "USDCHF",
+                "category": "Major"
             },
             {
-                "name": "USD/JPY",
-                "symbol": "USDJPY"
+                "name": "Australian Dollar / US Dollar",
+                "symbol": "AUDUSD",
+                "category": "Major"
             },
             {
-                "name": "USD/CHF",
-                "symbol": "USDCHF"
+                "name": "New Zealand Dollar / US Dollar",
+                "symbol": "NZDUSD",
+                "category": "Major"
             },
             {
-                "name": "USD/CAD",
-                "symbol": "USDCAD"
+                "name": "US Dollar / Canadian Dollar",
+                "symbol": "USDCAD",
+                "category": "Major"
+            },
+
+
+            {
+                "name": "Euro / British Pound",
+                "symbol": "EURGBP",
+                "category": "MinorCross"
+            },
+            {
+                "name": "Euro / Japanese Yen",
+                "symbol": "EURJPY",
+                "category": "MinorCross"
+            },
+            {
+                "name": "British Pound / Japanese Yen",
+                "symbol": "GBPJPY",
+                "category": "MinorCross"
+            },
+            {
+                "name": "Australian Dollar / Japanese Yen",
+                "symbol": "AUDJPY",
+                "category": "MinorCross"
+            },
+            {
+                "name": "New Zealand Dollar / Japanese Yen",
+                "symbol": "NZDJPY",
+                "category": "MinorCross"
+            },
+            {
+                "name": "Euro / Swiss Franc",
+                "symbol": "EURCHF",
+                "category": "MinorCross"
+            },
+            {
+                "name": "British Pound / Swiss Franc",
+                "symbol": "GBPCHF",
+                "category": "MinorCross"
+            },
+            {
+                "name": "Canadian Dollar / Japanese Yen",
+                "symbol": "CADJPY",
+                "category": "MinorCross"
+            },
+
+
+            {
+                "name": "Australian Dollar / Canadian Dollar",
+                "symbol": "AUDCAD",
+                "category": "Commodity"
+            },
+            {
+                "name": "Australian Dollar / New Zealand Dollar",
+                "symbol": "AUDNZD",
+                "category": "Commodity"
+            },
+            {
+                "name": "Canadian Dollar / Swiss Franc",
+                "symbol": "CADCHF",
+                "category": "Commodity"
+            },
+            {
+                "name": "Swiss Franc / Japanese Yen",
+                "symbol": "CHFJPY",
+                "category": "Commodity"
+            },
+
+
+            {
+                "name": "US Dollar / Chinese Yuan",
+                "symbol": "USDCNH",
+                "category": "Emerging"
+            },
+            {
+                "name": "US Dollar / Hong Kong Dollar",
+                "symbol": "USDHKD",
+                "category": "Emerging"
+            },
+            {
+                "name": "US Dollar / Singapore Dollar",
+                "symbol": "USDSGD",
+                "category": "Emerging"
+            },
+            {
+                "name": "US Dollar / Korean Won",
+                "symbol": "USDKRW",
+                "category": "Emerging"
+            },
+            {
+                "name": "US Dollar / Indian Rupee",
+                "symbol": "USDINR",
+                "category": "Emerging"
+            },
+            {
+                "name": "US Dollar / Mexican Peso",
+                "symbol": "USDMXN",
+                "category": "Emerging"
+            },
+            {
+                "name": "US Dollar / South African Rand",
+                "symbol": "USDZAR",
+                "category": "Emerging"
+            },
+            {
+                "name": "US Dollar / Turkish Lira",
+                "symbol": "USDTRY",
+                "category": "Emerging"
+            },
+            {
+                "name": "US Dollar / Brazilian Real",
+                "symbol": "USDBRL",
+                "category": "Emerging"
+            },
+
+
+            {
+                "name": "Gold / US Dollar",
+                "symbol": "XAUUSD",
+                "category": "fx_related"
+            },
+            {
+                "name": "US Dollar Index",
+                "symbol": "DXY",
+                "category": "fx_related"
             }
         ]
     }

@@ -1,7 +1,7 @@
 "use client";
 
 import Histogram from "./Histogram";
-import { TradeData } from "../data/TradeData";
+import { TradeData } from "../data/tradeData";
 
 export default function TradeChart(
     {

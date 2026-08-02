@@ -1,10 +1,4 @@
 
-interface FilterData {
-    StartDate: string;
-    EndDate: string;
-    Symbol: string;
-}
-
 export class DailyTradeData {
     Date: string = "";
     Pnl: number = 0;

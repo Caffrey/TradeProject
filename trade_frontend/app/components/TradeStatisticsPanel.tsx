@@ -1,5 +1,5 @@
 "use clinet"
-import { TradeStatisticsData } from "../data/TradeData"
+import { TradeStatisticsData } from "../data/tradeData"
 import NormalCardPanel from "./NormalCardPanel";
 import {NormalCardPanel2} from "./NormalCardPanel";
 

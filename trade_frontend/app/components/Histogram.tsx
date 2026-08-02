@@ -1,8 +1,8 @@
 import { CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts';
 import { RechartsDevtools } from '@recharts/devtools';
-import { TradeData } from '../data/TradeData';
+import { TradeData } from '../data/tradeData';
 
-import { StatisticsDailyTradeData } from '../data/TradeData';
+import { StatisticsDailyTradeData } from '../data/tradeData';
 
 export default function Histogram(
      {

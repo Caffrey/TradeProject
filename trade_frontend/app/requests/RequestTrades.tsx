@@ -1,4 +1,4 @@
-import { PreProcessTradeData,TradeData } from "../data/TradeData";
+import { PreProcessTradeData,TradeData } from "../data/tradeData";
 
 const ServerPath = "http://localhost:8000/"
 

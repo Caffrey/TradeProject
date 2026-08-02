@@ -1,27 +1,12 @@
 import Link from "next/link";
-
-const MenuItems = [
-    {
-        label:"Montly Trade Analysis",
-        herf :"/TradeNote/MonthTradeAnalysis"
-    },
-    {
-        label:"Trade Analysis",
-        herf :"/TradeNote/TradeAnalysis"
-    },
-    {
-         label:"Trade Improt",
-        herf :"/TradeNote/TradeImport"
-    }
-    
-];
+import { TRADE_ROUTES } from "../data/router";
 
 
 export default function Menu()
 {
     return(
         <div className="">
-                {MenuItems.map(item=>(
+                {Object.values(TRADE_ROUTES).map(item=>(
                     <div className="" key={item.label}>
                         <Link href={item.herf}>
                             <span>{item.label}</span>

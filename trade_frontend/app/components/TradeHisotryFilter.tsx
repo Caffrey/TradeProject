@@ -2,7 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Request_TradeValidSymbols } from "../requests/RequestTrades";
+import { Request_TradeValidSymbols } from "../requests/requestTrades";
+import { TRADE_ROUTES } from "../data/router";
 
 export default function TradeHisotryFilter()
 {
@@ -53,14 +54,8 @@ export default function TradeHisotryFilter()
      function GetTradeData(e : React.FormEvent<HTMLFormElement>){
 
         e.preventDefault();
-        // const formData = new FormData(e.currentTarget);
-
-        // const StartDate = formData.get("StartDate");
-        // const EndDate = formData.get("EndDate");
-        // const SymbolName = formData.get("SymbolName");
-
           const url =
-        `/TradeNote/TradeAnalysis?` +
+        `${TRADE_ROUTES.TradeNote_TradeAnalysis.herf}?` +
         `StartDate=${filter.StartDate}&` +
         `EndDate=${filter.EndDate}&` +
         `SymbolName=${filter.SymbolName}`;

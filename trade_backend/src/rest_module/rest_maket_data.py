@@ -15,3 +15,7 @@ async def GetTradeData(market:str):
 async def GetTradeData(market:str, symbol:str):
     result = GlobalEnv.GlobalDataBaseSession.query(DB_CandleData).filter(DB_CandleData.Market == market, DB_CandleData.Symbol == symbol).distinct().all()
     return GlobalEnv.QueryToJson(result)
+
+@MarketDataRoute.get('/market_data/RefreshIndices')
+async def GetTradeData():
+    return 0
