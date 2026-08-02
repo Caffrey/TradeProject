@@ -1,6 +1,5 @@
 import Link from "next/link";
-import { TRADE_ROUTES } from "../data/router";
-
+import { TRADE_ROUTES } from "@/data/router";
 
 export default function Menu()
 {

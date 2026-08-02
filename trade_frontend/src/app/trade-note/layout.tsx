@@ -1,4 +1,4 @@
-import Menu from "../components/Menu";
+import Menu from "@/components/trades/Menu";
 
 export default function TradeNoteLayout({
   children,

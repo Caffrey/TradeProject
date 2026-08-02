@@ -1,6 +1,6 @@
 import { CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts';
 import { RechartsDevtools } from '@recharts/devtools';
-import { TradeData } from '../data/tradeData';
+import { TradeData } from '@/data/tradeData';
 
 import { StatisticsDailyTradeData } from '../data/tradeData';
 
