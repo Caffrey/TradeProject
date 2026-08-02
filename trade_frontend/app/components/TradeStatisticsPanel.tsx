@@ -33,7 +33,7 @@ export default function TradeStatisticsPanel(
 
                     <NormalCardPanel
                         Title="Max DrawDown"
-                        Content={`-$${StatisticsData.MaxDrawback.toFixed(0)}`}
+                        Content={`-$${StatisticsData.MaxDrawback.toFixed(0)}__Peak:${StatisticsData.HistoryPeak.toFixed(0)}`}
                         SubContent={`$${StatisticsData.MaxDrawbackRate.toFixed(2)}%`}
                     />
                 </div>

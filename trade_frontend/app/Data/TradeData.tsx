@@ -48,6 +48,7 @@ export class TradeStatisticsData {
     AverageWin: number = 0;
     AverageLost: number = 0;
 
+    MaxDrawbackPeak:number = 0;
     MaxDrawback: number = 0;
     MaxDrawbackRate: number = 0;
     HistoryPeak: number = 0;
@@ -159,7 +160,6 @@ export function StatisticsReturnOfDistribution(TradeDatas: TradeData[], bin: num
 
 export function PreProcessTradeData(TradeDatas: TradeData[]) {
     let EquityCurve: number = 0;
-    console.log(TradeDatas)
     let Order = 1;
     TradeDatas.forEach((item: TradeData) => {
         EquityCurve += item.Pnl;
@@ -178,15 +178,23 @@ export function StatisticsTradeData(TradeDatas: TradeData[]) {
 
     TradeDatas.forEach((item: TradeData) => {
 
-        EquityCurve += item.Pnl;
+        EquityCurve += item.Pnl; 
+
+        const lostDay = StatisticsData.HistoryPeak > EquityCurve ? true : false;
+         if(lostDay)
+        {
+            let DrawDown: number = EquityCurve - StatisticsData.HistoryPeak ;
+            if (DrawDown < StatisticsData.MaxDrawback) {
+                StatisticsData.MaxDrawback = DrawDown;
+                StatisticsData.MaxDrawbackPeak = StatisticsData.HistoryPeak;
+            }
+        }
 
         StatisticsData.HistoryPeak = StatisticsData.HistoryPeak < EquityCurve ? EquityCurve : StatisticsData.HistoryPeak;
         StatisticsData.HistoryLow = StatisticsData.HistoryLow > EquityCurve ? EquityCurve : StatisticsData.HistoryLow;
 
-        let DrawDown: number = StatisticsData.HistoryPeak - EquityCurve;
-        if (DrawDown > StatisticsData.MaxDrawback) {
-            StatisticsData.MaxDrawback = DrawDown;
-        }
+       
+       
 
 
         if (item.Tick > 0) {
@@ -205,7 +213,7 @@ export function StatisticsTradeData(TradeDatas: TradeData[]) {
     StatisticsData.ProfitFactor = StatisticsData.TotalProfit / StatisticsData.TotalLost;
     StatisticsData.AverageWin = StatisticsData.TotalProfit / StatisticsData.WinCount;
     StatisticsData.AverageLost = StatisticsData.TotalLost / StatisticsData.LostCount;
-    StatisticsData.MaxDrawbackRate = StatisticsData.HistoryPeak / StatisticsData.MaxDrawback;
+    StatisticsData.MaxDrawbackRate = StatisticsData.MaxDrawback/StatisticsData.HistoryPeak *100;
 
     StatisticsData.WinRate.toFixed(2);
 

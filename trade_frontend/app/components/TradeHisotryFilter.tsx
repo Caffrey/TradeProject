@@ -1,25 +1,8 @@
 "use client";
 
-
-
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Request_TradeValidSymbols } from "../requests/RequestTrades";
-
-// const Symbol2 = [
-//     { name:"MNQ" },
-//     { name:"GC" },
-//     { name:"NQ" },
-//     { name:"ES" },
-//     { name:"XAUUSDm" },
-//     { name:"USTECm" },
-//     { name:"JP225m" },
-//     { name:"BTCUSDm" },
-//     { name:"AAPLm" },
-//     { name:"ETHUSDm" },
-//     { name:"EURUSDm" },
-// ];
-
 
 export default function TradeHisotryFilter()
 {
@@ -31,27 +14,21 @@ export default function TradeHisotryFilter()
         async function LoadSymbols(){
             const data = await Request_TradeValidSymbols();
             setSymbols(data);
+
+            if(data.length > 0){
+            setFilter(prev => ({
+                ...prev,
+                SymbolName: data[0].Symbol
+            }));
+        }
+
         }
         LoadSymbols();
+
     },[]);
 
 
-     function GetTradeData(e : React.FormEvent<HTMLFormElement>){
-
-        const formData = new FormData(e.currentTarget);
-
-        const StartDate = formData.get("StartDate");
-        const EndDate = formData.get("EndDate");
-        const SymbolName = formData.get("SymbolName");
-
-          const url =
-        `/TradeNote/TradeAnalysis?` +
-        `StartDate=${StartDate}&` +
-        `EndDate=${EndDate}&` +
-        `SymbolName=${SymbolName}`;
-
-        router.push(url)
-    }
+    
 
    function formatDateTime(date: Date) 
     {
@@ -67,6 +44,30 @@ export default function TradeHisotryFilter()
     const startDate = formatDateTime(start);
     //
 
+    const [filter, setFilter] = useState({
+        StartDate: startDate,
+        EndDate: endDate,   
+        SymbolName:""
+    });
+
+     function GetTradeData(e : React.FormEvent<HTMLFormElement>){
+
+        e.preventDefault();
+        // const formData = new FormData(e.currentTarget);
+
+        // const StartDate = formData.get("StartDate");
+        // const EndDate = formData.get("EndDate");
+        // const SymbolName = formData.get("SymbolName");
+
+          const url =
+        `/TradeNote/TradeAnalysis?` +
+        `StartDate=${filter.StartDate}&` +
+        `EndDate=${filter.EndDate}&` +
+        `SymbolName=${filter.SymbolName}`;
+
+        router.push(url)
+    }
+
     return(
         <div className="card w-96 bg-base-100 shadow-sm">
             <form onSubmit={GetTradeData}>
@@ -74,7 +75,8 @@ export default function TradeHisotryFilter()
             <div>
                 <label className="input">
                 <span className="label">start date</span>
-                <input type="datetime-local" name="StartDate" defaultValue={startDate} className="input input-bordered"/>
+                <input type="datetime-local" name="StartDate" value={filter.StartDate} className="input input-bordered" 
+                onChange={(e)=>{setFilter({...filter,StartDate:e.target.value})}}/>
                 </label>
             </div>
 
@@ -82,7 +84,8 @@ export default function TradeHisotryFilter()
             <div>
                 <label className="input">
                 <span className="label">End Date</span>
-                <input type="datetime-local" name="EndDate" defaultValue={endDate}/>
+                <input type="datetime-local" name="EndDate" value={filter.EndDate}
+                 onChange={(e)=>{setFilter({...filter,EndDate:e.target.value})}}/>
                 </label>
             </div>
 
@@ -90,7 +93,9 @@ export default function TradeHisotryFilter()
                 <label className="select">
                 <span className="label">Symbol</span>
 
-                <select name="SymbolName">
+                <select name="SymbolName" value={filter.SymbolName}
+                 onChange={(e)=>{setFilter({...filter,SymbolName:e.target.value})}}
+                 >
                     {Symbols.map(item=>(
                         <option value={item.Symbol} key={item.Symbol}>{item.Symbol}</option>
                     ))}
