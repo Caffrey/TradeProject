@@ -1,17 +1,18 @@
 
-import TradeChart from "./TradeChart";
-import TradeStatisticsPanel from "./TradeStatisticsPanel";
+
+import TradeChart from "@/components/trades/TradeChart";
+import TradeStatisticsPanel from "@/components/trades/TradeStatisticsPanel";
 import ReturnOfDistributionPanel from "./ReturnOfDistributionPanel";
 
-import { Request_GetTrades } from "../requests/requestTrades";
-import { TradeData,StatisticsTradeData,TradeStatisticsData} from "../data/tradeData";
+import { Request_GetTrades } from "@/requests/requestTrades";
+import { TradeData,StatisticsTradeData,TradeStatisticsData} from "@/data/tradeData";
 
 export default async function TradeAnalysisPanel
 (
        {
         StartDate,
         EndDate,
-        SymbolName
+    SymbolName
     }:{
         StartDate?:string,
         EndDate?:string,

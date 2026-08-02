@@ -2,8 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Request_TradeValidSymbols } from "../requests/requestTrades";
-import { TRADE_ROUTES } from "../data/router";
+import { Request_TradeValidSymbols } from "@/requests/requestTrades";
+import { TRADE_ROUTES } from "@/data/router";
 
 export default function TradeHisotryFilter()
 {

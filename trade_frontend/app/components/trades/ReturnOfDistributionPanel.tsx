@@ -1,9 +1,8 @@
 "use client"
 
-import { TradeStatisticsData,TradeData,StatisticsReturnOfDistribution,TradeDorData,SperadWinLostTradeRecords,StatisticsTradeData} from "../data/tradeData";
+import { TradeStatisticsData,TradeData,StatisticsReturnOfDistribution,TradeDorData,SperadWinLostTradeRecords,StatisticsTradeData} from "../../data/tradeData";
 
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
-import { RadialBarChart, RadialBar } from 'recharts';
 import { RechartsDevtools } from '@recharts/devtools';
 
 const style = {

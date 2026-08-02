@@ -1,6 +1,6 @@
 
-import TradeAnalysisPanel from "@/app/components/TradeAnalysisPanel";
-import TradeHisotryFilter from "@/app/components/TradeHisotryFilter";
+import TradeAnalysisPanel from "@/components/trades/TradeAnalysisPanel";
+import TradeHisotryFilter from "@/components/trades/TradeHisotryFilter";
 
 export default async function TradeAnalysis(
     {
