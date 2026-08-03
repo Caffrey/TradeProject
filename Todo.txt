@@ -24,6 +24,11 @@ Data Server : FastAPI + Middleware[PSQL + Redius]
     品种波动率相关性模块
 模块5
     宏观数据DashBoard
+    事件驱动Pipeline
+    
+模块7
+    stock wathc list【基本面方法】
+    日内波段watchlist【技术面方法】
 
 模块6
     回放交易模拟模块
