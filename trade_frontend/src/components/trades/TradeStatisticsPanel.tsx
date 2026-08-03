@@ -36,6 +36,12 @@ export default function TradeStatisticsPanel(
                         Content={`-$${StatisticsData.MaxDrawback.toFixed(0)}__Peak:${StatisticsData.HistoryPeak.toFixed(0)}`}
                         SubContent={`$${StatisticsData.MaxDrawbackRate.toFixed(2)}%`}
                     />
+
+                    <NormalCardPanel
+                        Title="Trade Sharp : Model Performance"
+                        Content={`${StatisticsData.Sharp.toFixed(2)}`}
+                        SubContent=""
+                    />
                 </div>
         </div>
     );

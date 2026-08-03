@@ -1,3 +1,4 @@
+import { calculateTradeSharpe } from "@/utils/sharpeRatio";
 
 export class DailyTradeData {
     Date: string = "";
@@ -47,6 +48,7 @@ export class TradeStatisticsData {
     MaxDrawbackRate: number = 0;
     HistoryPeak: number = 0;
     HistoryLow: number = 0;
+    Sharp : number = 0;
 }
 
 export function StatisticsDailyTradeData(TradeDatas: TradeData[]) {
@@ -167,12 +169,15 @@ export function PreProcessTradeData(TradeDatas: TradeData[]) {
 export function StatisticsTradeData(TradeDatas: TradeData[]) {
     let StatisticsData: TradeStatisticsData = new TradeStatisticsData();
 
+    let TradePnl: number[] = []
+
     let EquityCurve: number = 0;
     let HistoryHigh: number = 0;
 
     TradeDatas.forEach((item: TradeData) => {
 
         EquityCurve += item.Pnl; 
+        TradePnl.push(item.Pnl);
 
         const lostDay = StatisticsData.HistoryPeak > EquityCurve ? true : false;
          if(lostDay)
@@ -210,7 +215,26 @@ export function StatisticsTradeData(TradeDatas: TradeData[]) {
     StatisticsData.MaxDrawbackRate = StatisticsData.MaxDrawback/StatisticsData.HistoryPeak *100;
 
     StatisticsData.WinRate.toFixed(2);
-
+    StatisticsData.Sharp = calculateTradeSharpe(TradePnl);
     return StatisticsData;
 
 }
+
+
+// // 你的 equity curve，例如每日账户净值
+// const equityCurve = [10000, 10200, 10150, 10400, 10380, 10600, ...];
+
+// // ✅ 只要夏普比率（日度数据，年化）
+// const sharpe = sharpeFromPrices(equityCurve, {
+//   annualizationFactor: 252,   // 日度数据每年 252 个交易日
+//   riskFreeRate: 0,            // 无风险利率为 0（可按需调整）
+// });
+
+// // ✅ 要夏普 + 最大回撤 + 索提诺 + 卡尔玛等全部指标
+// const metrics = calculateRiskMetrics(equityCurve, 0, 252);
+
+// console.log(metrics.sharpeRatio);         // 年化夏普比率
+// console.log(metrics.maxDrawdown);         // 最大回撤（如 0.12 = 12%）
+// console.log(metrics.annualizedReturn);    // 年化收益率
+// console.log(metrics.annualizedVolatility); // 年化波动率
+
