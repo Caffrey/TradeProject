@@ -6,8 +6,8 @@ from pathlib import Path
 
 
 DATABASE_URL = "postgresql://postgres:123123@localhost:5432/Trade"
-AtasTradePath = "G:/我的云端硬盘/Trade/综合"
-ExnessTradePath = "G:/我的云端硬盘/Trade/Exness/TradeHistory.csv"
+AtasTradePath = "H:/我的云端硬盘/Trade/综合"
+ExnessTradePath = "H:/我的云端硬盘/Trade/Exness/TradeHistory.csv"
 
 GlobalServerApp:Optional[FastAPI] = None
 GlobalDataBaseSession:Optional[Session] = None

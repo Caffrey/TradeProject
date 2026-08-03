@@ -49,6 +49,8 @@ export class TradeStatisticsData {
     HistoryPeak: number = 0;
     HistoryLow: number = 0;
     Sharp : number = 0;
+    MostConsecutiveWin : number = 0;
+    MostConsecutiveLosses:number = 0;
 }
 
 export function StatisticsDailyTradeData(TradeDatas: TradeData[]) {
@@ -169,18 +171,34 @@ export function PreProcessTradeData(TradeDatas: TradeData[]) {
 export function StatisticsTradeData(TradeDatas: TradeData[]) {
     let StatisticsData: TradeStatisticsData = new TradeStatisticsData();
 
-    let TradePnl: number[] = []
 
     let EquityCurve: number = 0;
     let HistoryHigh: number = 0;
+    let MostConsecutiveWin :number = 0
+    let MostConsecutiveLost :number = 0
+
 
     TradeDatas.forEach((item: TradeData) => {
 
         EquityCurve += item.Pnl; 
-        TradePnl.push(item.Pnl);
 
         const lostDay = StatisticsData.HistoryPeak > EquityCurve ? true : false;
-         if(lostDay)
+        
+        if(item.Pnl < 0)
+        {
+            MostConsecutiveWin =0;
+            MostConsecutiveLost += 1
+            StatisticsData.MostConsecutiveLosses = StatisticsData.MostConsecutiveLosses > MostConsecutiveLost ? StatisticsData.MostConsecutiveLosses : MostConsecutiveLost;
+        }
+        else
+        {
+            MostConsecutiveWin += 1;
+            MostConsecutiveLost = 0
+            StatisticsData.MostConsecutiveWin = StatisticsData.MostConsecutiveWin > MostConsecutiveWin ? StatisticsData.MostConsecutiveWin : MostConsecutiveWin;
+        }
+
+
+        if(lostDay)
         {
             let DrawDown: number = EquityCurve - StatisticsData.HistoryPeak ;
             if (DrawDown < StatisticsData.MaxDrawback) {
@@ -215,7 +233,11 @@ export function StatisticsTradeData(TradeDatas: TradeData[]) {
     StatisticsData.MaxDrawbackRate = StatisticsData.MaxDrawback/StatisticsData.HistoryPeak *100;
 
     StatisticsData.WinRate.toFixed(2);
-    StatisticsData.Sharp = calculateTradeSharpe(TradePnl);
+
+    let DailyData = StatisticsDailyTradeData(TradeDatas);
+    let DailyPnls:number[] = []
+    DailyData.map(x =>DailyPnls.push(x.Pnl));
+    StatisticsData.Sharp = calculateTradeSharpe(DailyPnls);
     return StatisticsData;
 
 }

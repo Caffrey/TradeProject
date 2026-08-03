@@ -335,13 +335,53 @@ export function calculateRiskMetrics(
  * // 若每年约交易 250 笔，年化
  * const annualized = calculateTradeSharpe(pnls, 250);
  */
+/**
+ * 由累积 PnL 曲线计算 Trade Sharpe Ratio
+ *
+ * 累积 PnL（Equity Curve from trades）是每笔交易后的累加值，例如：
+ *   [50, 20, 140, 120, 200, ...]  ← 每笔交易后的累计盈亏
+ *
+ * 函数内部先求相邻差值还原每笔 PnL，再计算夏普比率：
+ *   pnl[i] = cumPnl[i] - cumPnl[i-1]
+ *   TradeSharpe = mean(pnl) / stdDev(pnl) * sqrt(annualizationFactor)
+ *
+ * @param cumPnlArr           累积 PnL 数组（时间升序），例如 EquityArr
+ * @param annualizationFactor 年化因子（默认 1，不年化）
+ * @param riskFreeRate        每笔无风险基准收益（通常为 0）
+ *
+ * @returns Trade Sharpe Ratio
+ *
+ * @example
+ * // EquityArr = 每笔交易后的累计盈亏
+ * const EquityArr = [50, 20, 140, 120, 200];
+ * const sharpe = sharpeFromCumPnl(EquityArr);
+ */
+export function sharpeFromCumPnl(
+  cumPnlArr: number[],
+  annualizationFactor = 1,
+  riskFreeRate = 0
+): number {
+  if (cumPnlArr.length < 2) {
+    throw new Error("至少需要 2 个累积 PnL 数据点");
+  }
+
+  // 还原每笔 PnL（相邻差值）
+  const pnlArr: number[] = [];
+  for (let i = 1; i < cumPnlArr.length; i++) {
+    pnlArr.push(cumPnlArr[i] - cumPnlArr[i - 1]);
+  }
+
+  return calculateTradeSharpe(pnlArr, annualizationFactor, riskFreeRate);
+}
+
 export function calculateTradeSharpe(
   pnlArr: number[],
   annualizationFactor = 1,
   riskFreeRate = 0
 ): number {
   if (pnlArr.length < 2) {
-    throw new Error("至少需要 2 笔交易数据才能计算 Trade Sharpe Ratio");
+    return 0;
+    // throw new Error("至少需要 2 笔交易数据才能计算 Trade Sharpe Ratio");
   }
 
   const excessPnl = pnlArr.map((p) => p - riskFreeRate);

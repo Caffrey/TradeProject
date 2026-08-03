@@ -42,6 +42,11 @@ export default function TradeStatisticsPanel(
                         Content={`${StatisticsData.Sharp.toFixed(2)}`}
                         SubContent=""
                     />
+                     <NormalCardPanel
+                        Title="Consecutive "
+                        Content={`max Consecutive win:${StatisticsData.MostConsecutiveWin.toFixed(0)}`}
+                        SubContent={`max Consecutive lost:${StatisticsData.MostConsecutiveLosses.toFixed(0)}`}
+                    />
                 </div>
         </div>
     );
