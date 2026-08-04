@@ -114,7 +114,7 @@
     "froex":
     {
         "market":"froex",
-        "intervals" : ["1m","1h","1D"],
+        "intervals" : ["1m","1h","1d"],
         "symbols":
         [
             {

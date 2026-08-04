@@ -29,6 +29,10 @@ class TradeRecord(declarative_base()):
     Symbol = Column(Text)
     OpenTime = Column(DateTime(timezone=False))
     CloseTime = Column(DateTime(timezone=False))
+    OpenPrice = Column(Numeric)
+    ClosePrice = Column(Numeric)
+    OpenVolume = Column(BigInteger)
+    CloseVolume = Column(BigInteger)
     Lot = Column(BigInteger)
     Tick = Column(BigInteger)
     Pnl = Column(Numeric)
@@ -36,3 +40,6 @@ class TradeRecord(declarative_base()):
     Acount = Column(Text)
     TradeRecordType = Column(Text)
     PositionID = Column(BigInteger)
+
+
+

@@ -4,6 +4,11 @@ export const APP_ROUTES = {
         label:"Trade Node App",
         herf :"/trade-note"
     },
+     MarketData:
+    {
+        label:"Market Data App",
+        herf :"/market-data"
+    },
 }
 export const TRADE_ROUTES ={
   
@@ -24,3 +29,11 @@ export const TRADE_ROUTES ={
     },
 
 }
+export const MARKET_DATA_ROUTES ={
+     MarketData_Analysis:
+    {
+        label:"Market Data Analysis",
+        herf :"/market-data/market-data-analysis"
+    },
+}
+

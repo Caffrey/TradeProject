@@ -15,6 +15,12 @@ def Trade_ProcessAtasDataFrame(df : DataFrame):
         trade.SourceSymbol = row['Instrument']
         trade.OpenTime = row['Open time']
         trade.Lot = row['Open volume']
+
+        trade.OpenVolume = row['Open volume']
+        trade.CloseVolume = row['Close Volume']
+        trade.OpenPrice = row['Open price']
+        trade.ClosePrice = row['Close price']
+
         trade.CloseTime = row['Close time'] if pd.notna(row['Close time']) else row["Open time"]
         trade.Tick = row['Profit (ticks)']
         trade.Pnl = row['PnL']

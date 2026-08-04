@@ -88,6 +88,12 @@ def Trade_ProcessMT5DataFrame(df : DataFrame):
         trade.CloseTime = row['exit_time']
         trade.Tick = row['profit']
         trade.Pnl = row['profit']
+
+        # trade.OpenVolume = row['Open volume']
+        # trade.CloseVolume = row['Close Volume']
+        # trade.OpenPrice = row['Open price']
+        # trade.ClosePrice = row['Close price']
+
         trade.TradeRecordType = TradeModuleConfig.RECORD_TYPE_MT5
         arr.append(trade)
     GlobalEnv.GlobalDataBaseSession.add_all(arr)

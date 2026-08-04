@@ -6,6 +6,17 @@ export class DailyTradeData {
     EquityCurve: number = 0;
 }
 
+export interface ExecuteData
+{
+    ID : number;
+    EntryTime:number;
+    EntryPrice : number;
+
+
+    Tick:number;
+    Pnl:number;
+}
+
 export interface TradeData {
     ID: number;
     OpenTime: string;

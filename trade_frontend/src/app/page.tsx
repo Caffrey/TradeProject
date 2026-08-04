@@ -14,6 +14,9 @@ export default function TradeImport() {
     redirect(APP_ROUTES.TradeNote.herf)
   };
 
+    const RedirectToTradeApp2 = async (data: FormData) => {
+    redirect(APP_ROUTES.MarketData.herf)
+  };
     return (
           <form>
             <button className="btn"
@@ -21,6 +24,13 @@ export default function TradeImport() {
               onClick={handleSubmit(RedirectToTradeApp)}
             >
             `${APP_ROUTES.TradeNote.label}`
+            </button>
+
+            <button className="btn"
+              type="button"
+              onClick={handleSubmit(RedirectToTradeApp2)}
+            >
+            `${APP_ROUTES.MarketData.label}`
             </button>
         </form>
     );

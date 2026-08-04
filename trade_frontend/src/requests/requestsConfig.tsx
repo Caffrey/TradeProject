@@ -1,0 +1,1 @@
+export const REST_SERVER_PATH = "http://localhost:8000/"

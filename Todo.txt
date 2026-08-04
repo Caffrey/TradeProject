@@ -14,21 +14,32 @@ Data Server : FastAPI + Middleware[PSQL + Redius]
 
 模块1
     交易记录显示模块
+    candle chart vs entry exit /profit lost/
+    acount + symbol
 
-模块3
-    股票   filter watchlist
-
-模块2
+模块2 market data mdoule
     市场K线数据下载与储存
-模块4
+
+模块4 market data analysis module
     品种波动率相关性模块
-模块5
+Volality
+    波动率相关性
+    波动率幅度相关性
+    时间与波动率相关性
+    经济新闻与波动率在时间上的相关性
+    价格运动幅度在多空的效率对比
+average voliality
+    time Frame 分布
+
+
+模块5 marco event module
     宏观数据DashBoard
     事件驱动Pipeline
     
-模块7
+模块7 portfolio module
     stock wathc list【基本面方法】
     日内波段watchlist【技术面方法】
+    sotkc filter watchlist
 
 模块6
     回放交易模拟模块
