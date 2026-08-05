@@ -89,10 +89,14 @@ def Trade_ProcessMT5DataFrame(df : DataFrame):
         trade.Tick = row['profit']
         trade.Pnl = row['profit']
 
-        # trade.OpenVolume = row['Open volume']
-        # trade.CloseVolume = row['Close Volume']
-        # trade.OpenPrice = row['Open price']
-        # trade.ClosePrice = row['Close price']
+        direction = 1
+        if row['direction'] == "SELL":
+            direction = -1
+
+        trade.OpenVolume = row['volume'] * direction
+        trade.CloseVolume = row['volume'] *direction*-1
+        trade.OpenPrice = row['entry_price']
+        trade.ClosePrice = row['exit_price']
 
         trade.TradeRecordType = TradeModuleConfig.RECORD_TYPE_MT5
         arr.append(trade)

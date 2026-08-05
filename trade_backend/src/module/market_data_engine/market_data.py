@@ -72,6 +72,7 @@ def DownHistoryDateToDataBase(market:str, Symbol:List[str], interval:str, startD
 
 
 def AddDataFrameToDataBase(data,market:str, interval:str):
+    print(data)
     arr = DataFrameToDbData(data.to_dataframe(), market=market,interval=interval)
     UpsertAll(GlobalEnv.GlobalDataBaseSession,DB_CandleData,arr)
     
