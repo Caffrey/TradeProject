@@ -1,4 +1,5 @@
 import {REST_SERVER_PATH} from "@/requests/requestsConfig.tsx"
+import { HistoryData } from "@/data/historyData";
 
 export async function Request_RefreshFutre()
 {
@@ -29,8 +30,13 @@ export async function Request_MarketDataValidSymbols(market:string)
     return res.json()
 }
 
-export async function Request_HistoryData(market:string,symbol:string)
+export async function Request_HistoryData(market:string,symbol:string|undefined)
 {
+    if (symbol == undefined)
+    {
+        return[]
+    }
+        
     const params = new URLSearchParams({
             market,
             symbol,
@@ -44,5 +50,12 @@ export async function Request_HistoryData(market:string,symbol:string)
         }
     );
 
-    return res.json()
+    let datas:HistoryData[] = await res.json();
+    datas.forEach(item=>
+        {
+            item.DateTime = new Date(item.Date);
+        }
+    )
+
+    return datas
 }

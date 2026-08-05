@@ -1,5 +1,5 @@
 import MarketDataHistoryFilter from "@/components/trading-view-charts/MarketDataHistoryFilter";
-
+import MarketDataDisplayPanel from "@/components/trading-view-charts/MarketDataDisplayPanel";
 export default async function MarketDataAnalysis(
     {
         searchParams
@@ -11,13 +11,20 @@ export default async function MarketDataAnalysis(
     }>
     }
 )
-
 {
-  const params = await searchParams;
-    return (
-        <div className="w-full">
-           <div className=""><MarketDataHistoryFilter market="future"/> </div>
-        </div>
+
+
+
+    const params = await searchParams;
+        return (
+            <div className="w-full">
+                <div className=""><MarketDataHistoryFilter market="future"/> </div>
+                <MarketDataDisplayPanel 
+                        StartDate={params.StartDate}
+                        EndDate={params.EndDate}
+                        SymbolName={params.SymbolName}
+                />
+            </div>
 
     );
 }

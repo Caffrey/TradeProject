@@ -7,17 +7,23 @@ from . import trade_module_config as TradeModuleConfig
 
 
 def Trade_ProcessAtasDataFrame(df : DataFrame):
+    
+    print(df.columns)
+    #incase none complete records
+    if  not ("Close volume" in df.columns):
+        return 
+    
     arr = []
     for index, row in df.iterrows():
+
         trade = TradeRecord()
-        
         trade.Symbol =  Trade_FilterSymbolName(row['Instrument'])
         trade.SourceSymbol = row['Instrument']
         trade.OpenTime = row['Open time']
         trade.Lot = row['Open volume']
 
         trade.OpenVolume = row['Open volume']
-        trade.CloseVolume = row['Close Volume']
+        trade.CloseVolume = row['Close volume']
         trade.OpenPrice = row['Open price']
         trade.ClosePrice = row['Close price']
 

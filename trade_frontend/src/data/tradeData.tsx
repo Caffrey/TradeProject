@@ -6,21 +6,15 @@ export class DailyTradeData {
     EquityCurve: number = 0;
 }
 
-export interface ExecuteData
-{
-    ID : number;
-    EntryTime:number;
-    EntryPrice : number;
-
-
-    Tick:number;
-    Pnl:number;
-}
 
 export interface TradeData {
     ID: number;
     OpenTime: string;
     CloseTime: string;
+    OpenPrice:number;
+    ClosePrice:number;
+    OpenVolume:number;
+    CloseVolume:number;
     Lot: number;
     Tick: number;
     Pnl: number;
@@ -252,7 +246,6 @@ export function StatisticsTradeData(TradeDatas: TradeData[]) {
     return StatisticsData;
 
 }
-
 
 // // 你的 equity curve，例如每日账户净值
 // const equityCurve = [10000, 10200, 10150, 10400, 10380, 10600, ...];
