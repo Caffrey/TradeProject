@@ -6,6 +6,27 @@ export class DailyTradeData {
     EquityCurve: number = 0;
 }
 
+export interface TradeExecuteData
+{
+    entryTime:number;
+    entryPrice: number;
+    exitTime: number;
+    exitPrice: number,
+    isLong: boolean,
+    pnl: number,
+}
+
+export function TranslateTradeDataToTradeExecuteData(tradeRecords:TradeData[])
+{
+    let datas:TradeExecuteData[] = []
+    tradeRecords.map(item=>
+        {
+             
+        }
+    );
+
+    return datas;
+}
 
 export interface TradeData {
     ID: number;

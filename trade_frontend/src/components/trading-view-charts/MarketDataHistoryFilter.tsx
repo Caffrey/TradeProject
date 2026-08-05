@@ -54,7 +54,8 @@ export default function MarketDataHistoryFilter(
     const [filter, setFilter] = useState({
         StartDate: startDate,
         EndDate: endDate,   
-        SymbolName:""
+        SymbolName:"",
+        showTradeHistory:Boolean,
     });
 
      function GetTradeData(e : React.FormEvent<HTMLFormElement>){
@@ -80,7 +81,7 @@ export default function MarketDataHistoryFilter(
                 onChange={(e)=>{setFilter({...filter,StartDate:e.target.value})}}/>
                 </label>
             </div>
-
+            
             
             <div>
                 <label className="input">
@@ -105,9 +106,13 @@ export default function MarketDataHistoryFilter(
                 </label>
             </div>
 
-            <button type="submit"
-            className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg xl:btn-xl">ApplyFilter</button>
+            <div>
+                <label><input type='checkbox' name="showTradeHistory"></input>显示交易记录</label>
+            </div>
 
+
+            <button type="submit"
+                className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg xl:btn-xl">ApplyFilter</button>
             </form>
         </div>
     );

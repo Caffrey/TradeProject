@@ -8,6 +8,7 @@ from openbb import obb
 from pandas import DataFrame
 from datetime import date
 from src.module.database_module.database_interface import UpsertAll
+from src.module.common_module import common_function as CommonFunction
 
 
 class DB_CandleData(declarative_base()):
@@ -20,6 +21,7 @@ class DB_CandleData(declarative_base()):
     Volume = Column(Numeric)
     Date = Column(DateTime)
     Symbol = Column(Text)
+    SourceSymbol = Column(Text)
     TimeFrame = Column(Text)
     Market = Column(Text)
     __table_args__ = (
@@ -39,7 +41,8 @@ def DataFrameToDbData(df:DataFrame,market,interval):
     arr = []
     for index, row in df.iterrows():
         candle = DB_CandleData()
-        candle.Symbol = row['symbol']
+        candle.Symbol = CommonFunction.OpenbbSymbolTranslateProcess(row['symbol'])
+        candle.Symbol = row['SourceSymbol']
         candle.Open = row['open']
         candle.Close = row['close']
         candle.High = row['high']   
