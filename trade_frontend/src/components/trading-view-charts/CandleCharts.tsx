@@ -9,20 +9,20 @@ import { useEffect, useRef } from "react";
 // ── 测试用伪造数据 ────────────────────────────────────────────────────────────
 const MOCK_TRADES: TradePair[] = [
     {
-        entryTime:  Math.floor(new Date("2026-07-19T18:00:00").getTime() / 1000) as Time,
+        entryTime:  Math.floor(new Date("2026-07-19T18:00:00Z").getTime() / 1000) as Time,
         entryPrice: 4009,
-        exitTime:   Math.floor(new Date("2026-07-19T23:00:00").getTime() / 1000) as Time,
+        exitTime:   Math.floor(new Date("2026-07-19T23:00:00Z").getTime() / 1000) as Time,
         exitPrice:  4040,
         isLong: true,
         pnl:    31,
     },
     {
-        entryTime:  Math.floor(new Date("2026-07-20T12:00:00").getTime() / 1000) as Time,
+        entryTime:  Math.floor(new Date("2026-07-20T12:00:00Z").getTime() / 1000) as Time,
         entryPrice: 4006,
-        exitTime:   Math.floor(new Date("2026-07-21T02:00:00").getTime() / 1000) as Time,
+        exitTime:   Math.floor(new Date("2026-07-21T02:00:00Z").getTime() / 1000) as Time,
         exitPrice:  4069,
         isLong: true,
-        pnl:    63,
+        pnl:    -63,
     },
 ];
 
