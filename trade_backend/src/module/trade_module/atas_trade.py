@@ -48,7 +48,7 @@ def Trade_ProcessAtasDataFrame(df : DataFrame):
     for index, row in df.iterrows():
 
         trade = TradeRecord()
-        trade.Symbol =  CommonFunction.Trade_FilterSymbolName(row['Instrument'])
+        trade.Symbol =  CommonFunction.AtasTranslateProcess(row['Instrument'])
         trade.SourceSymbol = row['Instrument']
 
         trade.OpenTime = china_time_to_utc_str(row['Open time'])

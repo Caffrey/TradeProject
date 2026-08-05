@@ -7,7 +7,7 @@ export interface CandleSitckSeriesData {
 }
 
 export interface HistoryData {
-    time:Date;
+    time:string;
     open:number;
     close:number;
     high:number;

@@ -54,3 +54,4 @@ average voliality
 1.symbol 全部统一  √
 2.时区后端统一 √
 3. 现货symobl
+4.客户端增加时间转换

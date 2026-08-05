@@ -1,5 +1,6 @@
 import { PreProcessTradeData,TradeData } from "@/data/tradeData";
 import {REST_SERVER_PATH} from "@/requests/requestsConfig.tsx"
+import { fetchWithTimeZoneProcess } from "@/utils/globalFetch";
 
 
 export async function Request_RefreshAtasTrades()
@@ -63,15 +64,13 @@ export async function Request_GetTrades(
             SymbolName
          });
 
-          const res = await fetch(
+       trades = await fetchWithTimeZoneProcess<TradeData[]>(
 
             `${REST_SERVER_PATH}rest_trade/GetTradeData?${params.toString()}`,
             {
                 cache:"no-store"
             }
         );
-
-        trades = await res.json();
      }
      
     PreProcessTradeData(trades);
