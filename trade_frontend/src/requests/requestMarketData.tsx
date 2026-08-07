@@ -1,4 +1,6 @@
 import {REST_SERVER_PATH} from "@/requests/requestsConfig.tsx"
+import { HistoryData } from "@/data/historyData";
+import { fetchWithTimeZoneProcess } from "@/utils/globalFetch";
 
 export async function Request_RefreshFutre()
 {
@@ -29,14 +31,20 @@ export async function Request_MarketDataValidSymbols(market:string)
     return res.json()
 }
 
-export async function Request_HistoryData(market:string,symbol:string)
+export async function Request_HistoryData(market:string,symbol:string|undefined)
 {
+    if (symbol == undefined)
+    {
+        return[]
+    }
+    
+    let datas:HistoryData[] = []
     const params = new URLSearchParams({
             market,
             symbol,
          });
 
-        const res = await fetch(
+        datas = await fetchWithTimeZoneProcess<HistoryData[]>(
 
         `${REST_SERVER_PATH}market_data/HistoryData?${params.toString()}`,
         {
@@ -44,5 +52,11 @@ export async function Request_HistoryData(market:string,symbol:string)
         }
     );
 
-    return res.json()
+    datas.forEach(item=>
+        {
+            item.DateTime = new Date(item.Date);
+        }
+    )
+
+    return datas
 }
