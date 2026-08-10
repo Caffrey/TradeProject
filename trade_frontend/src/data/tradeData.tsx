@@ -6,6 +6,13 @@ export class DailyTradeData {
     EquityCurve: number = 0;
 }
 
+export interface TradeFilterData {
+    Acount: string;
+    Symbol: string;
+    TradeRecordType: string;
+    Strategy:string;
+}
+
 export interface TradeExecuteData
 {
     entryTime:number;

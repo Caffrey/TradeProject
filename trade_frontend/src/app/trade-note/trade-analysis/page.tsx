@@ -7,9 +7,12 @@ export default async function TradeAnalysis(
         searchParams
     }:{
          searchParams: Promise<{
-        StartDate?: string,
-        EndDate?: string,
-        SymbolName?: string
+        StartDate?:string,
+        EndDate?:string,
+        Platfotm?:string,
+        Account?:string,
+        Strategy?:string,
+        SymbolName?:string
     }>
     }
 )
@@ -24,6 +27,9 @@ export default async function TradeAnalysis(
             <TradeAnalysisPanel 
                 StartDate={params.StartDate}
                 EndDate={params.EndDate}
+                Platfotm={params.Platfotm}
+                Account={params.Account}
+                Strategy={params.Strategy}
                 SymbolName={params.SymbolName}
             />
             </div>

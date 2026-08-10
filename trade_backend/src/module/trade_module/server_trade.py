@@ -7,6 +7,7 @@ import pandas as pd
 
 from src import env as GlobalEnv
 from .meta_trade import ExpotallMetaTradeHistory
+from sqlalchemy import delete
 from .trade_data import *
 from .meta_trade import *
 from .atas_trade import *
@@ -32,7 +33,6 @@ def Trade_TradeImport(df : DataFrame, TradeSheetType : str ,acount:str,method:st
         GlobalEnv.GlobalDataBaseSession.commit()
 
 
-
 def Trade_RefreshAtasDataBase(acount:str,method:str,path:str):
     folder = Path(path)
     for file in folder.glob("*.xlsx"):
@@ -46,6 +46,8 @@ def Trade_RefreshMT5(acount:str,method:str,path:str):
         Trade_TradeImport(df,TradeModuleConfig.RECORD_TYPE_MT5,acount,method)
     
 def Trade_Refresh():
+    GlobalEnv.GlobalDataBaseSession.execute(delete(TradeRecord))
+    GlobalEnv.GlobalDataBaseSession.commit()
     for folderName in os.listdir(GlobalEnv.TradeRecordsPath):
         platform,acount,method = folderName.split("_")
         Trade_AnalaysisImport(platform,acount,method, os.path.join(GlobalEnv.TradeRecordsPath,folderName))
@@ -63,9 +65,15 @@ def Trade_AnalaysisImport(platform,acount,method,path):
 def Trade_GetTrades(
     StartDate : datetime,
     EndDate : datetime,
+    Platfotm:str,
+    AcountName:str,
+    Strategy:str,
     Symbol : str):
     selectResult = GlobalEnv.GlobalDataBaseSession.query(TradeRecord).where(
         TradeRecord.Symbol.contains(Symbol),
+        TradeRecord.Acount.contains(AcountName),
+        TradeRecord.Strategy.contains(Strategy),
+        TradeRecord.TradeRecordType.contains(Platfotm),
         TradeRecord.CloseTime <= EndDate,
         TradeRecord.OpenTime >= StartDate
     )
@@ -73,11 +81,11 @@ def Trade_GetTrades(
     return trades;
 
 def Trade_ClearTable(RecordType:str):
-    GlobalEnv.GlobalDataBaseSession.query(TradeRecord).filter(TradeRecord.TradeRecordType == RecordType).delete()
+    GlobalEnv.GlobalDataBaseSession.query(TradeRecord).filter(TradeRecord.TradeRecordType == RecordType,).delete()
     GlobalEnv.GlobalDataBaseSession.commit()
 
 
-def GetValidSymbols():
-    result = GlobalEnv.GlobalDataBaseSession.query(TradeRecord.Symbol).distinct().all()
+def GetHistoryTradeFliterData():
+    result = GlobalEnv.GlobalDataBaseSession.query(TradeRecord.Symbol,TradeRecord.Acount,TradeRecord.TradeRecordType,TradeRecord.Strategy).distinct().all()
     return GlobalEnv.QueryToJson(result)
 ##清理

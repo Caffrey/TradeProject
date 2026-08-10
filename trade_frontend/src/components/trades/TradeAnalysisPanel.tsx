@@ -9,19 +9,26 @@ import { TradeData,StatisticsTradeData,TradeStatisticsData} from "@/data/tradeDa
 
 export default async function TradeAnalysisPanel
 (
-       {
+    {
         StartDate,
         EndDate,
-    SymbolName
+        Platfotm,
+        Account,
+        Strategy,
+        SymbolName      
     }:{
         StartDate?:string,
         EndDate?:string,
+        Platfotm?:string,
+        Account?:string,
+        Strategy?:string,
         SymbolName?:string
     }
 )
 {
+    console.log(StartDate,EndDate,Platfotm,Account,Strategy,SymbolName)
 
-    let trades:TradeData[] = await Request_GetTrades(StartDate,EndDate,SymbolName);
+    let trades:TradeData[] = await Request_GetTrades(StartDate,EndDate,Platfotm,Account,Strategy,SymbolName);
     let StatisticsData:TradeStatisticsData = StatisticsTradeData(trades);
 
 

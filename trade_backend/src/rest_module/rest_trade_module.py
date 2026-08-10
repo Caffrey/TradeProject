@@ -13,25 +13,22 @@ async def root():
 @Trade_Router.post('/rest_trade/RefreshTradeRecordDataBase')
 async def RefreshTradeRecordDataBAse(RecordType:str):
     Trade_Refresh()
-    # if RecordType == TradeModuleConfig.RECORD_TYPE_ATAS:
-    #     print(RecordType)
-    #     Trade_RefreshAtasDataBase()
-    # elif RecordType == TradeModuleConfig.RECORD_TYPE_MT5:
-    #     print(RecordType)
-    #     Trade_RefreshMT5()
 
-@Trade_Router.get('/rest_trade/GetValidSymbol')
-async def GetTradeSymbols():
-    return GetValidSymbols()
+@Trade_Router.get('/rest_trade/GetFilterData')
+async def GetTradeFliterData():
+    result =  GetHistoryTradeFliterData()
+    return result
 
 
 @Trade_Router.get('/rest_trade/GetTradeData')
 async def GetTradeData(
     StartDate : datetime,
     EndDate : datetime,
-    SymbolName : str):
-
-    trades = Trade_GetTrades(StartDate,EndDate,SymbolName)
-
+    Platfotm:str,
+    Account:str,
+    Strategy:str,
+    SymbolName : str,
+    ):
+    print('kla;sjdlkasjdlkjsakdj')
+    trades = Trade_GetTrades(StartDate,EndDate,Platfotm,Account,Strategy,SymbolName)
     return trades
-

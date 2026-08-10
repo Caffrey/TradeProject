@@ -76,8 +76,12 @@ function ProcessTimeRecursive(data:any):any
 
 
 export async function fetchWithTimeZoneProcess<T>(url: string, options?: RequestInit): Promise<T> {
+    
+    console.log(url)
+
     const res = await fetch(url, options);
     const data: T = await res.json();
+    console.log(data)
 
     return ProcessTimeRecursive(data);
 }
