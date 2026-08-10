@@ -12,13 +12,13 @@ async def root():
 
 @Trade_Router.post('/rest_trade/RefreshTradeRecordDataBase')
 async def RefreshTradeRecordDataBAse(RecordType:str):
-    if RecordType == TradeModuleConfig.RECORD_TYPE_ATAS:
-        print(RecordType)
-        Trade_RefreshAtasDataBase()
-    elif RecordType == TradeModuleConfig.RECORD_TYPE_MT5:
-        print(RecordType)
-    
-        Trade_RefreshMT5()
+    Trade_Refresh()
+    # if RecordType == TradeModuleConfig.RECORD_TYPE_ATAS:
+    #     print(RecordType)
+    #     Trade_RefreshAtasDataBase()
+    # elif RecordType == TradeModuleConfig.RECORD_TYPE_MT5:
+    #     print(RecordType)
+    #     Trade_RefreshMT5()
 
 @Trade_Router.get('/rest_trade/GetValidSymbol')
 async def GetTradeSymbols():

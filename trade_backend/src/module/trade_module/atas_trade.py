@@ -65,5 +65,4 @@ def Trade_ProcessAtasDataFrame(df : DataFrame):
         trade.TradeRecordType = TradeModuleConfig.RECORD_TYPE_ATAS
 
         arr.append(trade)
-    GlobalEnv.GlobalDataBaseSession.add_all(arr)
-    GlobalEnv.GlobalDataBaseSession.commit()
+    return arr

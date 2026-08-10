@@ -27,6 +27,7 @@ class TradeRecord(declarative_base()):
     SourceSymbol = Column(Text)
     Acount = Column(Text)
     TradeRecordType = Column(Text)
+    Strategy = Column(Text)
     PositionID = Column(BigInteger)
 
 

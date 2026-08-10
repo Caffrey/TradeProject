@@ -100,5 +100,4 @@ def Trade_ProcessMT5DataFrame(df : DataFrame):
 
         trade.TradeRecordType = TradeModuleConfig.RECORD_TYPE_MT5
         arr.append(trade)
-    GlobalEnv.GlobalDataBaseSession.add_all(arr)
-    GlobalEnv.GlobalDataBaseSession.commit()
+    return arr
