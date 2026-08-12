@@ -29,7 +29,6 @@ export default function ReturnOfDistributionPanel(
     let WinDor:TradeDorData[] = StatisticsReturnOfDistribution(TradeArray[0],30,Statistics.TotalProfit);
     let LostDor:TradeDorData[] = StatisticsReturnOfDistribution(TradeArray[1],30,-Statistics.TotalLost);
     
-  console.log(LostDor)
 
     return (
     <div className="flex w-full">

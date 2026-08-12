@@ -47,6 +47,11 @@ export default function TradeStatisticsPanel(
                         Content={`max Consecutive win:${StatisticsData.MostConsecutiveWin.toFixed(0)}`}
                         SubContent={`max Consecutive lost:${StatisticsData.MostConsecutiveLosses.toFixed(0)}`}
                     />
+                       <NormalCardPanel
+                        Title="Fee  "
+                        Content={`Total Fee :${StatisticsData.TotalFee.toFixed(2)}`}
+                        SubContent={`Per Trade Fee:${StatisticsData.PerTradeFee.toFixed(2)}`}
+                    />
                 </div>
         </div>
     );

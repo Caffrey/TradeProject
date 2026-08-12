@@ -61,6 +61,17 @@ def Trade_AnalaysisImport(platform,acount,method,path):
         case TradeModuleConfig.RECORD_TYPE_MT5:
             Trade_RefreshMT5(acount,method,path)
 
+def Trade_GetCommisionData(AcountName:str):
+    print(AcountName)
+    selectResult = GlobalEnv.GlobalDataBaseSession.query(TradeFee).where(TradeFee.Account == AcountName)
+
+    resultMap:dict = {}
+    for x in selectResult:
+        resultMap[x.Symbol] = x.Fee
+
+    
+    return resultMap
+
 
 def Trade_GetTrades(
     StartDate : datetime,
@@ -78,6 +89,18 @@ def Trade_GetTrades(
         TradeRecord.OpenTime >= StartDate
     )
     trades = selectResult.all()
+
+    #process commissions
+    commissions:dict= Trade_GetCommisionData(AcountName)    
+
+    for x in trades:
+        feeResult = commissions.get(x.Symbol)
+        if feeResult == None:
+            x.Fee = 0
+        else:
+            x.Fee = feeResult
+
+
     return trades;
 
 def Trade_ClearTable(RecordType:str):

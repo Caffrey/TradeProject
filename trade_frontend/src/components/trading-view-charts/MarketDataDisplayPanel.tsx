@@ -20,7 +20,6 @@ export default async function MarketDataDisplayPanel
 
     let historyDatas:HistoryData[] = await Request_HistoryData("future",SymbolName);
     let Datas: CandleSitckSeriesData[] = TranslateCandleToTradingviewCandle(historyDatas)
-    console.log("lkasdjflakjsdfljk")
     return(
         <div >
             <CandleCharts CandleDatas={Datas}/>

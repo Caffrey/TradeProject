@@ -50,6 +50,7 @@ export interface TradeData {
     SourceSymbol: string;
     EquityCurve: number;
     Order: number;
+    Fee : number;
 }
 
 export class TradeDorData {
@@ -84,6 +85,8 @@ export class TradeStatisticsData {
     Sharp : number = 0;
     MostConsecutiveWin : number = 0;
     MostConsecutiveLosses:number = 0;
+    PerTradeFee : number = 0;
+    TotalFee : number = 0;
 }
 
 export function StatisticsDailyTradeData(TradeDatas: TradeData[]) {
@@ -192,9 +195,11 @@ export function StatisticsReturnOfDistribution(TradeDatas: TradeData[], bin: num
 export function PreProcessTradeData(TradeDatas: TradeData[]) {
     let EquityCurve: number = 0;
     let Order = 1;
+    console.log("process data")
     TradeDatas.forEach((item: TradeData) => {
-        EquityCurve += item.Pnl;
+        EquityCurve += item.Pnl - item.Fee;
         item.EquityCurve = EquityCurve;
+        item.Pnl -= item.Fee;
         item.Order = Order;
         Order++;
     });
@@ -217,6 +222,8 @@ export function StatisticsTradeData(TradeDatas: TradeData[]) {
 
         const lostDay = StatisticsData.HistoryPeak > EquityCurve ? true : false;
         
+        StatisticsData.TotalFee += item.Fee;
+        StatisticsData.PerTradeFee = item.Fee;
         if(item.Pnl < 0)
         {
             MostConsecutiveWin =0;

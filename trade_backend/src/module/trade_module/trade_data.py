@@ -31,4 +31,9 @@ class TradeRecord(declarative_base()):
     PositionID = Column(BigInteger)
 
 
-
+class TradeFee(declarative_base()):
+    __tablename__= "TradeFee"
+    ID = Column(BigInteger,primary_key=True,autoincrement=True)
+    Account =  Column(Text)
+    Symbol = Column(Text)
+    Fee = Column(Numeric)

@@ -29,6 +29,5 @@ async def GetTradeData(
     Strategy:str,
     SymbolName : str,
     ):
-    print('kla;sjdlkasjdlkjsakdj')
     trades = Trade_GetTrades(StartDate,EndDate,Platfotm,Account,Strategy,SymbolName)
     return trades

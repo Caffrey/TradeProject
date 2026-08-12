@@ -26,7 +26,6 @@ export default async function TradeAnalysisPanel
     }
 )
 {
-    console.log(StartDate,EndDate,Platfotm,Account,Strategy,SymbolName)
 
     let trades:TradeData[] = await Request_GetTrades(StartDate,EndDate,Platfotm,Account,Strategy,SymbolName);
     let StatisticsData:TradeStatisticsData = StatisticsTradeData(trades);

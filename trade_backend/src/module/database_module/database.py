@@ -17,5 +17,6 @@ def InitDataBase():
     User.metadata.create_all(bind=engine)
     TradeRecord.metadata.create_all(bind=engine)
     DB_CandleData.metadata.create_all(bind=engine)
+    TradeFee.metadata.create_all(bind=engine)
 
     return Session_local()

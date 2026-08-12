@@ -11,7 +11,6 @@ export async function Request_RefreshFutre()
             method:"GET"
         }
     );
-    console.log(res.json)
     return res.json()
 }
 
