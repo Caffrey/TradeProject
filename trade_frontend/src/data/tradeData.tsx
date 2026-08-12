@@ -66,7 +66,7 @@ export class TradeDorData {
 export class TradeStatisticsData {
     ProfitFactor: number = 0;
     TradeCount: number = 0;
-
+    OrginPnl:number = 0;
     TotalProfit: number = 0;
     TotalLost: number = 0;
 
@@ -219,7 +219,6 @@ export function StatisticsTradeData(TradeDatas: TradeData[]) {
     TradeDatas.forEach((item: TradeData) => {
 
         EquityCurve += item.Pnl; 
-
         const lostDay = StatisticsData.HistoryPeak > EquityCurve ? true : false;
         
         StatisticsData.TotalFee += item.Fee;
@@ -271,8 +270,8 @@ export function StatisticsTradeData(TradeDatas: TradeData[]) {
     StatisticsData.AverageWin = StatisticsData.TotalProfit / StatisticsData.WinCount;
     StatisticsData.AverageLost = StatisticsData.TotalLost / StatisticsData.LostCount;
     StatisticsData.MaxDrawbackRate = StatisticsData.MaxDrawback/StatisticsData.HistoryPeak *100;
-
     StatisticsData.WinRate.toFixed(2);
+    StatisticsData.OrginPnl = StatisticsData.TotalProfit - StatisticsData.TotalLost + StatisticsData.TotalFee;
 
     let DailyData = StatisticsDailyTradeData(TradeDatas);
     let DailyPnls:number[] = []

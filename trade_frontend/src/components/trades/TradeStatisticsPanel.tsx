@@ -1,5 +1,5 @@
 "use clinet"
-import { TradeStatisticsData } from "@/data/tradeData"
+import { StatisticsTradeData, TradeStatisticsData } from "@/data/tradeData"
 import NormalCardPanel from "./NormalCardPanel";
 import {NormalCardPanel2} from "./NormalCardPanel";
 
@@ -15,7 +15,7 @@ export default function TradeStatisticsPanel(
 
                     <NormalCardPanel
                         Title="Net Pnl"
-                        Content={(StatisticsData.TotalProfit-StatisticsData.TotalLost).toFixed(0)}
+                        Content={`$${(StatisticsData.TotalProfit-StatisticsData.TotalLost).toFixed(2)}/${StatisticsData.OrginPnl.toFixed(2)}`}
                         SubContent={`${StatisticsData.TradeCount}Trades`}
                     />
 
@@ -49,7 +49,7 @@ export default function TradeStatisticsPanel(
                     />
                        <NormalCardPanel
                         Title="Fee  "
-                        Content={`Total Fee :${StatisticsData.TotalFee.toFixed(2)}`}
+                        Content={`Total Fee :${StatisticsData.TotalFee.toFixed(2)}/${(StatisticsData.TotalFee/StatisticsData.OrginPnl).toFixed(2)}%`}
                         SubContent={`Per Trade Fee:${StatisticsData.PerTradeFee.toFixed(2)}`}
                     />
                 </div>
