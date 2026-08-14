@@ -7,14 +7,12 @@ export default async function MarketDataAnalysis(
          searchParams: Promise<{
         StartDate?: string,
         EndDate?: string,
-        SymbolName?: string
+        SymbolName?: string,
+        TimeFrame?:string,
     }>
     }
 )
 {
-
-
-
     const params = await searchParams;
         return (
             <div className="w-full">
@@ -23,6 +21,7 @@ export default async function MarketDataAnalysis(
                         StartDate={params.StartDate}
                         EndDate={params.EndDate}
                         SymbolName={params.SymbolName}
+
                 />
             </div>
 

@@ -14,6 +14,18 @@ export async function Request_RefreshFutre()
     return res.json()
 }
 
+export async function Request_RefreshFroex()
+{
+    const res = await fetch(
+        `${REST_SERVER_PATH}market_data/RefresFroex`,
+        {
+            cache:"no-store",
+            method:"GET"
+        }
+    );
+    return res.json()
+}
+
 export async function Request_MarketDataValidSymbols(market:string)
 {
       const params = new URLSearchParams({

@@ -3,6 +3,7 @@
 import CandleCharts from "./CandleCharts";
 import { Request_HistoryData } from "@/requests/requestMarketData";
 import { CandleSitckSeriesData,HistoryData, TranslateCandleToTradingviewCandle } from "@/data/historyData";
+import CustomRadialBarChart from "../CustomRadialBarChart";
 
 export default async function MarketDataDisplayPanel
 (
@@ -23,6 +24,8 @@ export default async function MarketDataDisplayPanel
     return(
         <div >
             <CandleCharts CandleDatas={Datas}/>
+            <CustomRadialBarChart ChartName="Test"/>
+            
         </div>
     );
 }

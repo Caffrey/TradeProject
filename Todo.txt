@@ -57,6 +57,20 @@ average voliality
 4.客户端增加时间转换 ok 
 
 
-1.commision 
-2.comission cal in server
-3.commision card
+1.commision  √
+2.comission cal in server  √
+3.commision card 🐕 √
+
+
+波动率分析
+Marfe的
+    1.Hour波动率分析
+    2.Session波动率分析
+    3.每个小时波动率
+    4.timeframe波动率
+
+
+统计日内在Hour里的波动率
+Seesion 波动率统计
+
+不同TimeFrame贡献的波动率回报
