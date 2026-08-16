@@ -7,9 +7,10 @@ from pathlib import Path
 
 DATABASE_URL = "postgresql://postgres:123123@localhost:5432/Trade"
 
-GoogleDrivePath = "G:/我的云端硬盘/"
+GoogleDrivePath = "G:/我的云端硬盘/DataBase/"
 TradeRecordsPath = GoogleDrivePath+"Trade/TradeRecord/"
-FroexMarketData = GoogleDrivePath+"HistoryData"
+FroexMarketData = GoogleDrivePath+"HistoryData/"
+GameTrade = GoogleDrivePath+"Game/"
 
 
 
