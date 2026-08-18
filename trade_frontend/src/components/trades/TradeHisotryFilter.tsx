@@ -38,6 +38,7 @@ export default function TradeHisotryFilter()
         Accounts:"",
         Strategies:"",
         SymbolName:"",
+        ShowRule:"",
     });
     
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -131,6 +132,7 @@ export default function TradeHisotryFilter()
 
      function GetTradeData(e : React.FormEvent<HTMLFormElement>){
 
+        
         e.preventDefault();
           const url =
         `${TRADE_ROUTES.TradeNote_TradeAnalysis.herf}?` +
@@ -139,7 +141,9 @@ export default function TradeHisotryFilter()
         `Platfotm=${filter.Platform}&` +
         `Account=${filter.Accounts}&` +
         `Strategy=${filter.Strategies}&` +
-        `SymbolName=${filter.SymbolName}`;
+        `SymbolName=${filter.SymbolName}&` +
+        `ShowRule=${filter.ShowRule}`
+        ;
 
         router.push(url)
     }
@@ -217,6 +221,12 @@ export default function TradeHisotryFilter()
                         <option value={item} key={item}>{item}</option>
                     ))}
                 </select>
+                </label>
+            </div>
+            
+            <div>
+                <label className="select">
+                <input type="checkbox" name="ShowRule" onChange={(e)=>{setFilter({...filter,ShowRule:e.target.value})}}/>显示PropFrim规则
                 </label>
             </div>
 

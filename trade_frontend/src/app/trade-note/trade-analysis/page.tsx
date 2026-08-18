@@ -13,12 +13,14 @@ export default async function TradeAnalysis(
         Account?:string,
         Strategy?:string,
         SymbolName?:string
+        ShowRule?:boolean
     }>
     }
 )
 
 {
   const params = await searchParams;
+
     return (
         <div className="w-full">
            <div className=""><TradeHisotryFilter/> </div>
@@ -31,6 +33,7 @@ export default async function TradeAnalysis(
                 Account={params.Account}
                 Strategy={params.Strategy}
                 SymbolName={params.SymbolName}
+                ShowRule={params.ShowRule}
             />
             </div>
         </div>

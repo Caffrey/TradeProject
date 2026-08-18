@@ -6,17 +6,35 @@ import { StatisticsDailyTradeData } from '../data/tradeData';
 
 export default function Histogram(
      {
-        TradeRecords
+        TradeRecords,
+        ShowRule
     }:
     {
-        TradeRecords:TradeData[] 
+        TradeRecords:TradeData[],
+        ShowRule?:boolean
     }
 ) {
     
 
 let DailyData = StatisticsDailyTradeData(TradeRecords);
 
+    let min:number = 1000000
+    let max:number = -999999
+    DailyData.forEach(item =>
+    {
+      min = item.EquityCurve < min ? item.EquityCurve : min
+      max = item.EquityCurve > max ? item.EquityCurve : max
+    }
+    );
 
+    min *= 0.9
+    max *= 1.1
+    min = Math.trunc(min)
+    max =Math.trunc(max)
+    console.log("dddddddddddddddddd")
+    console.log(max)
+    console.log(min)
+  
   return (
  <div className='flex w-full '>
 
@@ -37,9 +55,11 @@ let DailyData = StatisticsDailyTradeData(TradeRecords);
         <h2>Daily Equity Curve</h2>
     <LineChart style={{ width: '100%', aspectRatio: 1.618 }} responsive data={DailyData}>
       <CartesianGrid />
-      <Line dataKey="EquityCurve" />
+      {ShowRule && <Line dataKey="TargetEquity" stroke='blue'/>}
+      <Line dataKey="EquityCurve" stroke='green'/>
+      {ShowRule&&<Line dataKey="MinalEuqity" stroke='red'/>}
       <XAxis dataKey="Date" />
-      <YAxis />
+      <YAxis domain={[min,max]} tickCount={10}/>
       <Tooltip/>
 
       <Legend />

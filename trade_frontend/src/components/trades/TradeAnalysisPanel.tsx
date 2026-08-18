@@ -15,26 +15,28 @@ export default async function TradeAnalysisPanel
         Platfotm,
         Account,
         Strategy,
-        SymbolName      
+        SymbolName,
+        ShowRule, 
     }:{
         StartDate?:string,
         EndDate?:string,
         Platfotm?:string,
         Account?:string,
         Strategy?:string,
-        SymbolName?:string
+        SymbolName?:string,
+        ShowRule?:boolean
     }
 )
 {
 
     let trades:TradeData[] = await Request_GetTrades(StartDate,EndDate,Platfotm,Account,Strategy,SymbolName);
     let StatisticsData:TradeStatisticsData = StatisticsTradeData(trades);
-
+    
 
     return(
         <div >
             <TradeStatisticsPanel StatisticsData={StatisticsData}/>
-            <TradeChart TradeRecords={trades} />
+            <TradeChart TradeRecords={trades} ShowRule={ShowRule} />
             <ReturnOfDistributionPanel TradeDatas={trades}/>
         </div>
     );

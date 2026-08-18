@@ -4,6 +4,8 @@ export class DailyTradeData {
     Date: string = "";
     Pnl: number = 0;
     EquityCurve: number = 0;
+    MinalEuqity : number = 0;
+    TargetEquity : number = 0;
 }
 
 export interface TradeFilterData {
@@ -89,7 +91,7 @@ export class TradeStatisticsData {
     TotalFee : number = 0;
 }
 
-export function StatisticsDailyTradeData(TradeDatas: TradeData[]) {
+export function StatisticsDailyTradeData(TradeDatas: TradeData[],startEquity:number = 25000, targetPorift:number =0.06, lostLine:number= 0.04 ) {
     const dailyMap = new Map<string, DailyTradeData>();
 
     TradeDatas.forEach(item => {
@@ -114,10 +116,18 @@ export function StatisticsDailyTradeData(TradeDatas: TradeData[]) {
             - new Date(b.Date).getTime();
     });
 
-    let pnl = 0;
+    let pnl = startEquity;
+    let MinalEuqity = startEquity * (1 - lostLine);
     result.forEach(item => {
         pnl += item.Pnl;
         item.EquityCurve = pnl;
+        if(item.Pnl > 0)
+        {
+            MinalEuqity += item.Pnl;
+        }
+        item.MinalEuqity = MinalEuqity;
+        item.TargetEquity = startEquity * (1 + targetPorift)
+
     });
 
     return result;

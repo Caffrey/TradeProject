@@ -3,14 +3,17 @@ from fastapi import FastAPI ,Form, UploadFile,File
 from typing import Optional
 from sqlalchemy.orm import Session
 from pathlib import Path
+from sqlalchemy.orm import declarative_base
 
+
+GlobalDataBaseStructure = declarative_base()
 
 DATABASE_URL = "postgresql://postgres:123123@localhost:5432/Trade"
 
 GoogleDrivePath = "G:/我的云端硬盘/DataBase/"
 TradeRecordsPath = GoogleDrivePath+"Trade/TradeRecord/"
 FroexMarketData = GoogleDrivePath+"HistoryData/"
-GameTrade = GoogleDrivePath+"Game/"
+GameData = GoogleDrivePath+"Game/test.json"
 
 
 
