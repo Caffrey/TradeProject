@@ -13,6 +13,7 @@ export interface TradeFilterData {
     Symbol: string;
     TradeRecordType: string;
     Strategy:string;
+    Dates:[Date]
 }
 
 export interface TradeExecuteData

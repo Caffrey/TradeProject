@@ -12,7 +12,7 @@ from .trade_data import *
 from .meta_trade import *
 from .atas_trade import *
 from . import trade_module_config as TradeModuleConfig
-
+from collections import defaultdict
 
 def Trade_TradeImport(df : DataFrame, TradeSheetType : str ,acount:str,method:str):
     arr = None
@@ -109,6 +109,31 @@ def Trade_ClearTable(RecordType:str):
 
 
 def GetHistoryTradeFliterData():
-    result = GlobalEnv.GlobalDataBaseSession.query(TradeRecord.Symbol,TradeRecord.Acount,TradeRecord.TradeRecordType,TradeRecord.Strategy).distinct().all()
-    return GlobalEnv.QueryToJson(result)
+
+    result = GlobalEnv.GlobalDataBaseSession.query(TradeRecord.Symbol,TradeRecord.Acount,TradeRecord.TradeRecordType,TradeRecord.Strategy,TradeRecord.OpenTime).all()
+    groups = defaultdict(set)
+
+    for symbol, account, record_type, strategy, open_time in result:
+        key = (
+            symbol,
+            account,
+            record_type,
+            strategy
+        )
+
+        groups[key].add(open_time.date())
+
+    result = [
+        {
+            "Symbol": symbol,
+            "Acount": account,
+            "TradeRecordType": record_type,
+            "Strategy": strategy,
+            "Dates": sorted(dates)
+        }
+        for (symbol, account, record_type, strategy), dates
+        in groups.items()
+    ]
+
+    return result
 ##清理

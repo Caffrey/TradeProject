@@ -31,9 +31,6 @@ let DailyData = StatisticsDailyTradeData(TradeRecords);
     max *= 1.1
     min = Math.trunc(min)
     max =Math.trunc(max)
-    console.log("dddddddddddddddddd")
-    console.log(max)
-    console.log(min)
   
   return (
  <div className='flex w-full '>

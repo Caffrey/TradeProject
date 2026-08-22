@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import { Request_TradeValidSymbols } from "@/requests/requestTrades";
 import { TRADE_ROUTES } from "@/data/router";
 import { TradeFilterData } from "@/data/tradeData";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export default function TradeHisotryFilter()
 {
@@ -15,6 +17,7 @@ export default function TradeHisotryFilter()
     const [Strategies, setStrategies] = useState<string[]>([]);
 
     const [TradeFilters, setTradeFilters] = useState<TradeFilterData[]>([]);
+    const [TradeDatas,setTradeDatas] = useState<Date[]>([])
 
     //setup date-----------------------------------------------------------------------------------------------------------------------------------------------------------
     function formatDateTime(date: Date) 
@@ -40,6 +43,24 @@ export default function TradeHisotryFilter()
         SymbolName:"",
         ShowRule:"",
     });
+
+    function RefreshDates()
+    {
+        const tradeFilter = TradeFilters.find(
+            item =>
+                item.Acount === filter.Accounts &&
+                item.Symbol === filter.SymbolName &&
+                item.TradeRecordType === filter.Platform &&
+                item.Strategy === filter.Strategies
+        );
+
+        const highlightDates = (tradeFilter?.Dates ?? []).map(
+                date => new Date(`${date}T00:00:00`)
+            );
+       setTradeDatas(highlightDates);
+
+        console.log(tradeFilter)
+    }
     
     //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
  
@@ -47,6 +68,7 @@ export default function TradeHisotryFilter()
     useEffect(()=>{
         async function LoadData(){
             const ServerData:TradeFilterData[] = await Request_TradeValidSymbols();
+
             
             setTradeFilters(ServerData)
 
@@ -86,6 +108,7 @@ export default function TradeHisotryFilter()
                 Accounts: data_account[0]
             }));
         }
+        RefreshDates()
     },[TradeFilters,filter.Platform]);
 
 
@@ -107,6 +130,8 @@ export default function TradeHisotryFilter()
                 Strategies:data_strategy[0]
             }));
         }
+        RefreshDates()
+
     },[TradeFilters,filter.Accounts])
 
 
@@ -127,6 +152,8 @@ export default function TradeHisotryFilter()
                 SymbolName:data_symbol[0]
             }));
         }
+        RefreshDates()
+
     },[TradeFilters,filter.Accounts,filter.Strategies])
     
 
@@ -153,20 +180,90 @@ export default function TradeHisotryFilter()
             <form onSubmit={GetTradeData}>
             
             <div>
-                <label className="input">
+                {/* <label className="input">
                 <span className="label">start date</span>
                 <input type="datetime-local" name="StartDate" value={filter.StartDate} className="input input-bordered" 
                 onChange={(e)=>{setFilter({...filter,StartDate:e.target.value})}}/>
-                </label>
+                </label> */}
+                 <span className="label">start date</span>
+                 <DatePicker
+                selected={
+                    filter.StartDate
+                        ? new Date(filter.StartDate)
+                        : null
+                }
+                onChange={(date) => {
+                    if (!date) {
+                        setFilter({
+                            ...filter,
+                            StartDate: ""
+                        });
+                        return;
+                    }
+
+                    const year = date.getFullYear();
+                    const month = String(date.getMonth() + 1).padStart(2, "0");
+                    const day = String(date.getDate()).padStart(2, "0");
+                    const hour = String(date.getHours()).padStart(2, "0");
+                    const minute = String(date.getMinutes()).padStart(2, "0");
+
+                    setFilter({
+                        ...filter,
+                        StartDate: `${year}-${month}-${day}T${hour}:${minute}`
+                    });
+                }}
+                showTimeSelect
+                timeFormat="HH:mm"
+                timeIntervals={15}
+                dateFormat="yyyy-MM-dd HH:mm"
+                placeholderText="Select start date"
+                highlightDates={TradeDatas}
+                className="input input-bordered w-full"
+            />
             </div>
 
             
             <div>
-                <label className="input">
+                {/* <label className="input">
                 <span className="label">End Date</span>
                 <input type="datetime-local" name="EndDate" value={filter.EndDate}
                  onChange={(e)=>{setFilter({...filter,EndDate:e.target.value})}}/>
-                </label>
+                </label> */}
+                <span className="label">end date</span>
+                 <DatePicker
+                selected={
+                    filter.StartDate
+                        ? new Date(filter.EndDate)
+                        : null
+                }
+                onChange={(date) => {
+                    if (!date) {
+                        setFilter({
+                            ...filter,
+                            EndDate: ""
+                        });
+                        return;
+                    }
+
+                    const year = date.getFullYear();
+                    const month = String(date.getMonth() + 1).padStart(2, "0");
+                    const day = String(date.getDate()).padStart(2, "0");
+                    const hour = String(date.getHours()).padStart(2, "0");
+                    const minute = String(date.getMinutes()).padStart(2, "0");
+
+                    setFilter({
+                        ...filter,
+                        EndDate: `${year}-${month}-${day}T${hour}:${minute}`
+                    });
+                }}
+                showTimeSelect
+                timeFormat="HH:mm"
+                timeIntervals={15}
+                dateFormat="yyyy-MM-dd HH:mm"
+                placeholderText="Select start date"
+                highlightDates={TradeDatas}
+                className="input input-bordered w-full"
+            />
             </div>
 
 
@@ -174,7 +271,9 @@ export default function TradeHisotryFilter()
                 <label className="select">
                 <span className="label">Platform</span>
                 <select name="AcountlName" value={filter.Platform}
-                    onChange={(e)=>{setFilter({...filter,Platform:e.target.value})}}
+                    onChange={(e)=>{setFilter({...filter,Platform:e.target.value})
+                        
+                }}
                     >
                     {Platforms.map(item =>(
                         <option value={item} key={item}>{item}</option>
@@ -187,8 +286,8 @@ export default function TradeHisotryFilter()
                 <label className="select">
                 <span className="label">Accounts</span>
                 <select name="AcountlName" value={filter.Accounts}
-                    onChange={(e)=>{setFilter({...filter,Accounts:e.target.value})}}
-                    >
+                    onChange={(e)=>{setFilter({...filter,Accounts:e.target.value})
+                        }}>
                     {Accounts.map(item =>(
                         <option value={item} key={item}>{item}</option>
                     ))}
@@ -201,8 +300,8 @@ export default function TradeHisotryFilter()
                 <span className="label">Strategies</span>
 
                 <select name="StrategyName" value={filter.Strategies}
-                    onChange={(e)=>{setFilter({...filter,Strategies:e.target.value})}}
-                    >
+                    onChange={(e)=>{setFilter({...filter,Strategies:e.target.value})
+                    }}>
                     {Strategies.map(item=>(
                         <option value={item} key={item}>{item}</option>
                     ))}
@@ -215,8 +314,10 @@ export default function TradeHisotryFilter()
                 <span className="label">Symbol</span>
 
                 <select name="SymbolName" value={filter.SymbolName}
-                    onChange={(e)=>{setFilter({...filter,SymbolName:e.target.value})}}
-                    >
+                    onChange={(e)=>{
+                        const symbol = e.target.value;
+                        setFilter({...filter,SymbolName:symbol})
+                    }}>
                     {Symbols.map(item=>(
                         <option value={item} key={item}>{item}</option>
                     ))}
