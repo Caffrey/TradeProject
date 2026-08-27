@@ -100,7 +100,7 @@ def Trade_GetTrades(
         else:
             x.Fee = feeResult
 
-
+    trades.sort(key=lambda x: x.OpenTime)
     return trades;
 
 def Trade_ClearTable(RecordType:str):

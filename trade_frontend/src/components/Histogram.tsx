@@ -60,7 +60,23 @@ let DailyData = StatisticsDailyTradeData(TradeRecords,0);
       <CartesianGrid />
       <Line dataKey="EquityCurve" dot={false}/>
       <XAxis dataKey="Order" />
-      <Tooltip/>
+      
+      <Tooltip
+      content={({ active, payload }) => {
+        if (!active || !payload || !payload.length) {
+          return null;
+        }
+
+        const data = payload[0].payload;
+
+        return (
+          <div className="rounded-md bg-white p-3 shadow-lg border">
+            <div>Order: {data.Order}</div>
+            <div>Date: {data.OpenTime.substring(0,10)}</div>
+            <div>Equity: {data.EquityCurve}</div>
+          </div>
+        );
+      }}/>
       <YAxis />
       <Legend />
       <RechartsDevtools />
