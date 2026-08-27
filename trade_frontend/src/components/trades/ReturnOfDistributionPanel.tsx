@@ -23,11 +23,12 @@ export default function ReturnOfDistributionPanel(
 )
 {   
     let Statistics:TradeStatisticsData = StatisticsTradeData(TradeDatas)
-    let TradeDorData:TradeDorData[] = StatisticsReturnOfDistribution(TradeDatas,30,0);
-    let TradeArray = SperadWinLostTradeRecords(TradeDatas,30)
+    let bin:number = 50
+    let TradeDorData:TradeDorData[] = StatisticsReturnOfDistribution(TradeDatas,bin,0);
+    let TradeArray = SperadWinLostTradeRecords(TradeDatas,bin)
 
-    let WinDor:TradeDorData[] = StatisticsReturnOfDistribution(TradeArray[0],30,Statistics.TotalProfit);
-    let LostDor:TradeDorData[] = StatisticsReturnOfDistribution(TradeArray[1],30,-Statistics.TotalLost);
+    let WinDor:TradeDorData[] = StatisticsReturnOfDistribution(TradeArray[0],bin,Statistics.TotalProfit);
+    let LostDor:TradeDorData[] = StatisticsReturnOfDistribution(TradeArray[1],bin,-Statistics.TotalLost);
     
 
     return (
@@ -35,17 +36,17 @@ export default function ReturnOfDistributionPanel(
 
     <div className="flex-1">
         <h2>Tick Distribution</h2>
-    <BarChart
-      style={{ width: '100%', maxWidth: '700px', maxHeight: '70vh', aspectRatio: 1.618 }}
-      responsive
-      data={TradeDorData}
-      margin={{
-        top: 5,
-        right: 0,
-        left: 0,
-        bottom: 5,
-      }}
-    >
+        <BarChart
+          style={{ width: '100%', maxWidth: '700px', maxHeight: '70vh', aspectRatio: 1.618 }}
+          responsive
+          data={TradeDorData}
+          margin={{
+            top: 5,
+            right: 0,
+            left: 0,
+            bottom: 5,
+          }}
+        >
       <CartesianGrid strokeDasharray="3 3" />
       <XAxis dataKey="name"  type="category"/>
       <YAxis width="auto" />

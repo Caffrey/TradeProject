@@ -6,6 +6,7 @@ export class DailyTradeData {
     EquityCurve: number = 0;
     MinalEuqity : number = 0;
     TargetEquity : number = 0;
+    Trades : number = 0;
 }
 
 export interface TradeFilterData {
@@ -108,6 +109,7 @@ export function StatisticsDailyTradeData(TradeDatas: TradeData[],startEquity:num
         }
 
         daily.Pnl += item.Pnl;
+        daily.Trades += 1;
     }
     );
 
