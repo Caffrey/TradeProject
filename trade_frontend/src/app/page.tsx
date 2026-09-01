@@ -5,15 +5,6 @@ import { APP_ROUTES } from "@/data/router";
 
 
 
-import FullCalendar from "@fullcalendar/react";
-import themePlugin from "@fullcalendar/react/themes/monarch"; // YOUR THEME
-import dayGridPlugin from "@fullcalendar/react/daygrid";
-
-// stylesheets
-import '@fullcalendar/react/skeleton.css'; // ALWAYS NEED SKELETON
-import '@fullcalendar/react/themes/monarch/theme.css'; // YOUR THEME
-import '@fullcalendar/react/themes/monarch/palettes/purple.css'; // YOUR THEME'S PALETTE
-
 
 export default function TradeImport() {
   const {
@@ -47,14 +38,6 @@ export default function TradeImport() {
             </button>
         </form>
 
-           <FullCalendar
-          plugins={[themePlugin, dayGridPlugin]}
-          initialView="dayGridMonth"
-           events={[
-            { title: "profit:256 \n asdfa \n", date: "2026-08-12" },
-            { title: "event 2", date: "2026-08-10" },
-          ]}
-        />
         </div>
     );
 }
