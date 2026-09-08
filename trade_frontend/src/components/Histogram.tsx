@@ -1,5 +1,13 @@
 import { useState } from 'react';
 import { CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts';
+import {
+  BarChart,
+  Bar,
+  ReferenceLine,
+  YAxisTickContentProps,
+  Text,
+  Cell,
+} from 'recharts';
 import { RechartsDevtools } from '@recharts/devtools';
 import { TradeData } from '@/data/tradeData';
 
@@ -169,6 +177,30 @@ const [currentMonthWeeks, setCurrentMonthWeeks] = useState<SummaryDate[]>([])
     setCurrentMonthWeeks(weeks)
 }
 
+const CustomYAxisTick = (props: YAxisTickContentProps) => {
+  const {
+    payload: { value },
+  } = props;
+
+  let fill: string;
+  switch (Math.sign(value)) {
+    case -1:
+      fill = 'red';
+      break;
+    case 1:
+      fill = 'green';
+      break;
+    default:
+      fill = 'black';
+  }
+
+  return (
+    <Text {...props} fill={fill} fontWeight={value === 0 ? 'bold' : 'normal'}>
+      {value}
+    </Text>
+  );
+};
+
 
 
   return (
@@ -221,7 +253,7 @@ const [currentMonthWeeks, setCurrentMonthWeeks] = useState<SummaryDate[]>([])
         </div>
         {/* // */}
         <div  className='flex-1'>
-            <h2>Daily Pnl Curve</h2>
+            <h2>盈利波动</h2>
         <LineChart style={{ width: '100%', aspectRatio: 1.618 }} responsive data={DailyData}>
           <CartesianGrid />
           <Line dataKey="Pnl" />
@@ -234,6 +266,7 @@ const [currentMonthWeeks, setCurrentMonthWeeks] = useState<SummaryDate[]>([])
         </LineChart>
         </div>
       </div>
+
 
 
     {/* // */}
@@ -298,6 +331,35 @@ const [currentMonthWeeks, setCurrentMonthWeeks] = useState<SummaryDate[]>([])
                       </div>
                   );
               })}
+        </div>
+        <div className='flex-1'>
+            <BarChart
+            style={{ width: '100%', maxWidth: '700px', maxHeight: '70vh', aspectRatio: 1.618 }}
+            responsive
+            data={DailyData}
+            margin={{
+                top: 5,
+                right: 0,
+                left: 0,
+                bottom: 5,
+            }}
+            >
+            <CartesianGrid />
+            <XAxis dataKey="Date" />
+            <YAxis width="auto" tick={CustomYAxisTick}/>
+            <Tooltip />
+            <Legend />
+            <ReferenceLine y={0} />
+            <Bar dataKey="Pnl">
+            {DailyData.map((entry, index) => (
+            <Cell
+                key={`cell-${index}`}
+                fill={entry.Pnl >= 0 ? 'green' : 'red'}
+            />
+            ))}
+        </Bar>
+            <RechartsDevtools />
+        </BarChart>
         </div>
     </div>
 
