@@ -14,6 +14,7 @@ GoogleDrivePath = "G:/我的云端硬盘/DataBase/"
 TradeRecordsPath = GoogleDrivePath+"Trade/TradeRecord/"
 FroexMarketData = GoogleDrivePath+"HistoryData/"
 GameData = GoogleDrivePath+"Game/test.json"
+ExnessTradePath = TradeRecordsPath+"MT5_SA_Realtime/trade_record.csv"
 
 
 

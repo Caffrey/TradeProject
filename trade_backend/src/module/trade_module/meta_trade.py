@@ -18,7 +18,6 @@ def GetTradeHistory():
     datetime(2026,1,1),
     datetime.now()
     )
-
     df = pd.DataFrame(
         [d._asdict() for d in deals]
     )

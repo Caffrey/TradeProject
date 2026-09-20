@@ -295,6 +295,7 @@ const CustomYAxisTick = (props: YAxisTickContentProps) => {
                   <div >
                     <div> Tra : {arg.event.extendedProps.Trades}</div>
                     <div > Pnl : {arg.event.extendedProps.Pnl.toFixed(0)} </div>
+                    <div > DrawDown : {arg.event.extendedProps.Pnl.toFixed(0)} </div>
                     
                   </div>);
               }}

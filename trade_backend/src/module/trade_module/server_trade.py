@@ -48,6 +48,7 @@ def Trade_RefreshMT5(acount:str,method:str,path:str):
 def Trade_Refresh():
     GlobalEnv.GlobalDataBaseSession.execute(delete(TradeRecord))
     GlobalEnv.GlobalDataBaseSession.commit()
+    ExpotallMetaTradeHistory()
     for folderName in os.listdir(GlobalEnv.TradeRecordsPath):
         platform,acount,method = folderName.split("_")
         Trade_AnalaysisImport(platform,acount,method, os.path.join(GlobalEnv.TradeRecordsPath,folderName))
