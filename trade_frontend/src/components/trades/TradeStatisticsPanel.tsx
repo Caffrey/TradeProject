@@ -27,8 +27,8 @@ export default function TradeStatisticsPanel(
 
                     <NormalCardPanel2
                         Title={`Avg Win/Lost: ${StatisticsData.ProfitFactor.toFixed(2)}`}
-                        Content={`Win $${StatisticsData.AverageWin.toFixed(0)}`}
-                        SubContent={`Lost -$${StatisticsData.AverageLost.toFixed(0)}`}
+                        Content={`Win $${StatisticsData.AverageWin.toFixed(0)} / Win:${StatisticsData.TotalProfit.toFixed(0)}`}
+                        SubContent={`Lost -$${StatisticsData.AverageLost.toFixed(0)} / Lost:${StatisticsData.TotalLost.toFixed(0)}`}
                     />
 
                     <NormalCardPanel
