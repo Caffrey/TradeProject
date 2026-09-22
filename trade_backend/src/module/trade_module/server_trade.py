@@ -11,6 +11,7 @@ from sqlalchemy import delete
 from .trade_data import *
 from .meta_trade import *
 from .atas_trade import *
+from .ctrader_trade import *
 from . import trade_module_config as TradeModuleConfig
 from collections import defaultdict
 
@@ -22,6 +23,8 @@ def Trade_TradeImport(df : DataFrame, TradeSheetType : str ,acount:str,method:st
             arr = Trade_ProcessAtasDataFrame(df)
         case TradeModuleConfig.RECORD_TYPE_MT5:
             arr = Trade_ProcessMT5DataFrame(df)
+        case TradeModuleConfig.RECORD_TYPE_CTRADER:
+            arr = Trade_ProcessCtraderDataFrame(df)
 
     if not(arr == None):
         for item in arr:
@@ -44,6 +47,13 @@ def Trade_RefreshMT5(acount:str,method:str,path:str):
     for file in folder.glob("*.csv"):
         df = pd.read_csv(file)
         Trade_TradeImport(df,TradeModuleConfig.RECORD_TYPE_MT5,acount,method)
+
+
+def Trade_RefreshCtrader(acount:str,method:str,path:str):
+    folder = Path(path)
+    for file in folder.glob("*.xlsx"):
+        df = pd.read_excel(file,sheet_name="Records")
+        Trade_TradeImport(df,TradeModuleConfig.RECORD_TYPE_CTRADER,acount,method)
     
 def Trade_Refresh():
     GlobalEnv.GlobalDataBaseSession.execute(delete(TradeRecord))
@@ -61,6 +71,8 @@ def Trade_AnalaysisImport(platform,acount,method,path):
             Trade_RefreshAtasDataBase(acount,method,path)
         case TradeModuleConfig.RECORD_TYPE_MT5:
             Trade_RefreshMT5(acount,method,path)
+        case TradeModuleConfig.RECORD_TYPE_CTRADER:
+            Trade_RefreshCtrader(acount,method,path)
 
 def Trade_GetCommisionData(AcountName:str):
     print(AcountName)
