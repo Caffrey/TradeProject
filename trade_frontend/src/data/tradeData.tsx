@@ -16,6 +16,18 @@ export interface TradeFilterData {
     Strategy:string;
     Dates:[Date]
 }
+interface HourPnl {
+    hour: number;
+    pnl: number;
+    lost:number;
+    profit:number;
+    count: number;
+}
+enum TimeDorType {
+  Win,
+  Lost,
+  Sum,
+}
 
 export interface TradeExecuteData
 {
@@ -156,6 +168,42 @@ export function SperadWinLostTradeRecords(TradeDatas: TradeData[], bin: number =
 
         return [WinTradeDatas,LostTradeDatas]
 }
+
+export function StatisticsTimeReturnOfDistribution(TradeDatas: TradeData[] )
+{
+        
+    const result: HourPnl[] = Array.from({ length: 24 }, (_, i) => ({
+        hour: i + 1,
+        pnl: 0,
+        lost :0,
+        profit:0,
+        count: 0,
+    }));
+
+    TradeDatas.forEach((trade) => {
+        const date = new Date(trade.OpenTime);
+        const hour = date.getHours();
+
+        // 1点 ~ 24点
+        if (hour >= 1) {
+            const index = hour - 1;
+
+            result[index].pnl += trade.Pnl;
+            if(trade.Pnl > 0)
+            {
+                result[index].profit += trade.Pnl;
+            }
+            else
+            {
+                result[index].lost += trade.Pnl;
+            }
+            result[index].count += 1;
+        }
+    });
+
+    return result;
+}
+
 
 export function StatisticsReturnOfDistribution(TradeDatas: TradeData[], bin: number = 20, MaxPnl: number) {
 
