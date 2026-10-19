@@ -8,6 +8,7 @@ export default function TradeStatisticsPanel(
     {StatisticsData:TradeStatisticsData}
 )
 {
+    let AvgRiskReward = StatisticsData.AverageWin / StatisticsData.AverageLost;
     return (
         <div>
             <h2 className="text-2xl font-bold">Trade Statistics Data</h2>
@@ -26,7 +27,7 @@ export default function TradeStatisticsPanel(
                     />
 
                     <NormalCardPanel2
-                        Title={`Avg Win/Lost: ${StatisticsData.ProfitFactor.toFixed(2)}`}
+                        Title={`Profit Factor: ${StatisticsData.ProfitFactor.toFixed(2)}/ Avg RiskReward:${AvgRiskReward.toFixed(2)} `}
                         Content={`Win $${StatisticsData.AverageWin.toFixed(0)} / Win:${StatisticsData.TotalProfit.toFixed(0)}`}
                         SubContent={`Lost -$${StatisticsData.AverageLost.toFixed(0)} / Lost:${StatisticsData.TotalLost.toFixed(0)}`}
                     />
