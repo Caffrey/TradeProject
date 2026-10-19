@@ -14,7 +14,8 @@ export interface TradeFilterData {
     Symbol: string;
     TradeRecordType: string;
     Strategy:string;
-    Dates:[Date]
+    Dates:[Date],
+    IsAll:boolean,
 }
 interface HourPnl {
     hour: number;

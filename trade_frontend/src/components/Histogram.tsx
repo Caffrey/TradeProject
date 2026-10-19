@@ -227,6 +227,7 @@ const CustomYAxisTick = (props: YAxisTickContentProps) => {
                 <div>Order: {data.Order}</div>
                 <div>Date: {data.OpenTime.substring(0,10)}</div>
                 <div>Equity: {data.EquityCurve}</div>
+                <div>Symbol: {data.Symbol}</div>
               </div>
             );
           }}/>
@@ -302,7 +303,7 @@ const CustomYAxisTick = (props: YAxisTickContentProps) => {
             />
         </div>
         <div className='flex-1'>
-          <h1>month trades ${currentMonth.trades}</h1>
+          <h1>month trades : {currentMonth.trades}</h1>
           <h1 className={   currentMonth.pnl >= 0  ? "text-green-600"  : "text-red-600" }
             >
             month pnl ${currentMonth.pnl}</h1>
@@ -314,7 +315,7 @@ const CustomYAxisTick = (props: YAxisTickContentProps) => {
 
                   return (
                       <div key={index}>
-                          <h1>第{index + 1}周</h1>
+                          <h1>第{index + 1}周 -- {item.startDate.toISOString().slice(5, 10)}--{item.endDate.toISOString().slice(5, 10)}</h1>
 
                           <h1>
                               Trades: {item.trades}

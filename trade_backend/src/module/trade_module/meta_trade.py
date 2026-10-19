@@ -5,11 +5,16 @@ from datetime import datetime
 from src import env as GlobalEnv
 from .trade_data import *
 from . import trade_module_config as TradeModuleConfig
+import os
 
 def ExpotallMetaTradeHistory():
     mt5.initialize()
     result:DataFrame = GetTradeJournry(trades=GetTradeHistory())
-    result.to_csv(GlobalEnv.ExnessTradePath)
+
+    account_info = mt5.account_info()
+    mt5_path = GlobalEnv.FTMO_MT5+str(account_info.server)+"_"+str(account_info.login)
+    os.makedirs(mt5_path, exist_ok=True)
+    result.to_csv(mt5_path+"/trade_record.csv")
     mt5.shutdown()
 
 

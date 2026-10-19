@@ -17,6 +17,7 @@ export default async function TradeAnalysisPanel
         Strategy,
         SymbolName,
         ShowRule, 
+        AllSymbol,
     }:{
         StartDate?:string,
         EndDate?:string,
@@ -24,12 +25,12 @@ export default async function TradeAnalysisPanel
         Account?:string,
         Strategy?:string,
         SymbolName?:string,
-        ShowRule?:boolean
+        ShowRule?:boolean,
+        AllSymbol?:boolean
     }
 )
 {
-
-    let trades:TradeData[] = await Request_GetTrades(StartDate,EndDate,Platfotm,Account,Strategy,SymbolName);
+    let trades:TradeData[] = await Request_GetTrades(StartDate,EndDate,Platfotm,Account,Strategy,SymbolName,AllSymbol);
     let StatisticsData:TradeStatisticsData = StatisticsTradeData(trades);
     
 

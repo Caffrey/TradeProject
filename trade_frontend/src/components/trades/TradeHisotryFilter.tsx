@@ -41,7 +41,8 @@ export default function TradeHisotryFilter()
         Accounts:"",
         Strategies:"",
         SymbolName:"",
-        ShowRule:"",
+        ShowRule:false,
+        AllSymbol:false
     });
 
     function RefreshDates()
@@ -169,7 +170,8 @@ export default function TradeHisotryFilter()
         `Account=${filter.Accounts}&` +
         `Strategy=${filter.Strategies}&` +
         `SymbolName=${filter.SymbolName}&` +
-        `ShowRule=${filter.ShowRule}`
+        `ShowRule=${filter.ShowRule}&` +
+        `AllSymbol=${filter.AllSymbol}`
         ;
 
         router.push(url)
@@ -327,7 +329,12 @@ export default function TradeHisotryFilter()
             
             <div>
                 <label className="select">
-                <input type="checkbox" name="ShowRule" onChange={(e)=>{setFilter({...filter,ShowRule:e.target.value})}}/>显示PropFrim规则
+                <input type="checkbox" name="ShowRule" onChange={(e)=>{setFilter({...filter,ShowRule:e.target.checked})}}/>显示PropFrim规则
+                </label>
+            </div>
+            <div>
+                <label className="select">
+                <input type="checkbox" name="AllSymbol" onChange={(e)=>{setFilter({...filter,AllSymbol:e.target.checked})}}/>全Symbol
                 </label>
             </div>
 

@@ -12,8 +12,9 @@ export default async function TradeAnalysis(
         Platfotm?:string,
         Account?:string,
         Strategy?:string,
-        SymbolName?:string
-        ShowRule?:boolean
+        SymbolName?:string,
+        ShowRule?:boolean,
+        AllSymbol?:boolean
     }>
     }
 )
@@ -34,6 +35,7 @@ export default async function TradeAnalysis(
                 Strategy={params.Strategy}
                 SymbolName={params.SymbolName}
                 ShowRule={params.ShowRule}
+                AllSymbol={params.AllSymbol}
             />
             </div>
         </div>

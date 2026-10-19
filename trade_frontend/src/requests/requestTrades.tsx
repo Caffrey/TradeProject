@@ -52,14 +52,15 @@ export async function Request_GetTrades(
         Platfotm?:string,
         Account?:string,
         Strategy?:string,
-        SymbolName?:string
+        SymbolName?:string,
+        AllSymbol?:boolean
 )
 
 {
-      let trades:TradeData[] = [];
-
-     if(StartDate && EndDate && SymbolName && Strategy && Platfotm && Account)
+    let trades:TradeData[] = [];
+     if(StartDate && EndDate && SymbolName && Strategy && Platfotm && Account && AllSymbol)
      {
+        let IsAll = String(AllSymbol)
 
          const params = new URLSearchParams({
             StartDate,
@@ -67,7 +68,8 @@ export async function Request_GetTrades(
             Platfotm,
             Account,
             Strategy,
-            SymbolName
+            SymbolName,
+            IsAll
          });
 
        trades = await fetchWithTimeZoneProcess<TradeData[]>(

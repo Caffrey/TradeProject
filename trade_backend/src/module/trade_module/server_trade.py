@@ -92,7 +92,9 @@ def Trade_GetTrades(
     Platfotm:str,
     AcountName:str,
     Strategy:str,
-    Symbol : str):
+    Symbol : str,
+    AllSymbol : bool):
+
     selectResult = GlobalEnv.GlobalDataBaseSession.query(TradeRecord).where(
         TradeRecord.Symbol.contains(Symbol),
         TradeRecord.Acount.contains(AcountName),
@@ -101,6 +103,16 @@ def Trade_GetTrades(
         TradeRecord.CloseTime <= EndDate,
         TradeRecord.OpenTime >= StartDate
     )
+
+    if AllSymbol :
+        selectResult = GlobalEnv.GlobalDataBaseSession.query(TradeRecord).where(
+                TradeRecord.Acount.contains(AcountName),
+                TradeRecord.Strategy.contains(Strategy),
+                TradeRecord.TradeRecordType.contains(Platfotm),
+                TradeRecord.CloseTime <= EndDate,
+                TradeRecord.OpenTime >= StartDate
+            )
+
     trades = selectResult.all()
 
     #process commissions

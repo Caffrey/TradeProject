@@ -28,6 +28,7 @@ async def GetTradeData(
     Account:str,
     Strategy:str,
     SymbolName : str,
+    IsAll : bool,
     ):
-    trades = Trade_GetTrades(StartDate,EndDate,Platfotm,Account,Strategy,SymbolName)
+    trades = Trade_GetTrades(StartDate,EndDate,Platfotm,Account,Strategy,SymbolName,IsAll)
     return trades
