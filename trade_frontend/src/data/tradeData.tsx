@@ -7,6 +7,8 @@ export class DailyTradeData {
     MinalEuqity : number = 0;
     TargetEquity : number = 0;
     Trades : number = 0;
+    win : number = 0;
+    lost :number = 0;
 }
 
 export interface TradeFilterData {
@@ -123,6 +125,14 @@ export function StatisticsDailyTradeData(TradeDatas: TradeData[],startEquity:num
 
         daily.Pnl += item.Pnl;
         daily.Trades += 1;
+        if(item.Pnl>0)
+        {
+            daily.win += item.Pnl;
+        }
+        else
+        {
+            daily.lost += item.Pnl;   
+        }
     }
     );
 

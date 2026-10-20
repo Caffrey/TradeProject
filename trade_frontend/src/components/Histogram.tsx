@@ -66,6 +66,9 @@ let DailyData = StatisticsDailyTradeData(TradeRecords,startMoney);
     allDay: true,
     Pnl: item.Pnl,
     Trades:item.Trades,
+    win : item.win,
+    lost : item.lost,
+    pf : Math.abs(item.win/item.lost),
     color: item.Pnl < 0 ? "#ef4444" : "#22c55e",
   }));
   
@@ -85,6 +88,8 @@ const [currentMonthWeeks, setCurrentMonthWeeks] = useState<SummaryDate[]>([])
 ) {
     let pnl = 0
     let trades = 0
+    let win = 0
+    let lost = 0
 
     DailyTradeDatas.forEach((item) => {
 
@@ -93,12 +98,25 @@ const [currentMonthWeeks, setCurrentMonthWeeks] = useState<SummaryDate[]>([])
         if (date >= startDate && date <= endDate) {
             pnl += item.Pnl
             trades += item.Trades
+            if(item.Pnl > 0)
+            {
+                win += item.Pnl;
+            }
+            else
+            {
+              lost += item.Pnl;
+            }
         }
     })
+    
+    let profitFactor = win/lost;
 
     return {
         pnl,
-        trades
+        trades,
+        win,
+        lost,
+        profitFactor
     }
 }
 
@@ -296,7 +314,9 @@ const CustomYAxisTick = (props: YAxisTickContentProps) => {
                   <div >
                     <div> Tra : {arg.event.extendedProps.Trades}</div>
                     <div > Pnl : {arg.event.extendedProps.Pnl.toFixed(0)} </div>
-                    <div > DrawDown : {arg.event.extendedProps.Pnl.toFixed(0)} </div>
+                    <div > win : {arg.event.extendedProps.win.toFixed(0)} </div>
+                    <div > lost : {arg.event.extendedProps.lost.toFixed(0)} </div>
+                    <div > pf : {arg.event.extendedProps.pf.toFixed(2)} </div>
                     
                   </div>);
               }}
